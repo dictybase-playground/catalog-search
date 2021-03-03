@@ -21,16 +21,6 @@ const getDropdownValues = (tags: string[], options: string[]) => {
   return options.map((item) => item)
 }
 
-// const lastVal = value[value.length - 1]
-// const prevLastVal = value[value.length - 2]
-// // need to look at last two tags
-// if (!options.includes(lastVal)) {
-//   const oldTags = tags.splice(tags.length - 2, 2)
-//   const newTag = `${prevLastVal}:${lastVal}`
-//   console.log(oldTags)
-//   setTags([...oldTags, newTag])
-// }
-
 // const getTagDisplays = () => {}
 
 /**
@@ -63,9 +53,6 @@ const SearchBox = () => {
         onChange={handleChange}
         renderTags={(value: string[], getTagProps) =>
           value.map((option: string, index: number) => {
-            // if (tags.includes(option)) {
-            //   return <span key={index}>{option}:</span>
-            // }
             return (
               <Chip
                 variant="outlined"

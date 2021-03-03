@@ -3,9 +3,7 @@ import { ApolloProvider } from "@apollo/client"
 import { BrowserRouter } from "react-router-dom"
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles"
 import Container from "@material-ui/core/Container"
-import Box from "@material-ui/core/Box"
-import SearchBox from "./SearchBox"
-import FilterDropdown from "./FilterDropdown"
+import CatalogContainer from "./CatalogContainer"
 import useApolloClient from "./hooks/useApolloClient"
 
 const theme = createMuiTheme({})
@@ -18,10 +16,7 @@ const App = () => {
       <MuiThemeProvider theme={theme}>
         <BrowserRouter>
           <Container>
-            <Box m={2} display="flex" flexDirection="row" alignItems="center">
-              <FilterDropdown />
-              <SearchBox />
-            </Box>
+            <CatalogContainer />
           </Container>
         </BrowserRouter>
       </MuiThemeProvider>

@@ -4,13 +4,6 @@ import FormControl from "@material-ui/core/FormControl"
 import Select from "@material-ui/core/Select"
 import Input from "@material-ui/core/Input"
 
-const options = [
-  "Regular Strains",
-  "GWDI Strains",
-  "All Available Strains",
-  "Bacterial Strains",
-]
-
 const useStyles = makeStyles((theme: Theme) => ({
   filter: {
     // border: "1px solid grey",
@@ -23,15 +16,19 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }))
 
-const FilterDropdown = () => {
-  const classes = useStyles()
-  const [value, setValue] = React.useState("")
-
-  const handleChange = (
+type Props = {
+  /** List of options to display in dropdown */
+  options: string[]
+  /** Callback used on item select */
+  handleChange: (
     event: React.ChangeEvent<{ name?: string; value: any }>,
-  ) => {
-    setValue(event.target.value)
-  }
+  ) => void
+  /** Selected value */
+  value: string
+}
+
+const FilterDropdown = ({ options, handleChange, value }: Props) => {
+  const classes = useStyles()
 
   return (
     <span className={classes.filter}>
