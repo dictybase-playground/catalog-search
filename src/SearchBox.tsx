@@ -3,7 +3,7 @@ import Chip from "@material-ui/core/Chip"
 import Autocomplete from "@material-ui/lab/Autocomplete"
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles"
 import TextField from "@material-ui/core/TextField"
-import mockStrains from "./mockStrains"
+// import mockStrains from "./mockStrains"
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -15,9 +15,21 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const options = ["Label", "Summary", "ID"]
 
-const getDropdownValues = () => {}
+const getDropdownValues = (tags: string[], options: string[]) => {
+  // if last element in tags array is a search property then we need to
+  // fetch data, otherwise it should display a list of the properties
+  return options.map((item) => item)
+}
 
-const getTagDisplays = () => {}
+// const getTagDisplays = () => {}
+
+/**
+ * Logic to implement:
+ *
+ * 1. Adding tag shows the property (i.e. Label:)
+ * 2. When user starts typing, fetch data that matches property/value
+ * 3. After user enters value, turn this into a Chip
+ */
 
 const SearchBox = () => {
   const classes = useStyles()
@@ -25,6 +37,7 @@ const SearchBox = () => {
 
   const handleChange = (event: React.ChangeEvent<{}>, value: string[]) => {
     event.preventDefault()
+    console.log(value)
     setTags([...tags, value[0]])
   }
 
@@ -33,25 +46,23 @@ const SearchBox = () => {
       <Autocomplete
         multiple
         id="strain-catalog"
-        options={options.map((item) => item)}
+        options={getDropdownValues(tags, options)}
         freeSolo
         filterSelectedOptions
         onChange={handleChange}
         renderTags={(value: string[], getTagProps) =>
           value.map((option: string, index: number) => {
-            console.log(value)
             if (tags.includes(option)) {
               return <span key={index}>{option}:</span>
-            } else {
-              return (
-                <Chip
-                  variant="outlined"
-                  color="default"
-                  label={option}
-                  {...getTagProps({ index })}
-                />
-              )
             }
+            return (
+              <Chip
+                variant="outlined"
+                color="default"
+                label={option}
+                {...getTagProps({ index })}
+              />
+            )
           })
         }
         renderInput={(params) => (
