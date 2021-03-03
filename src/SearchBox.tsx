@@ -13,13 +13,23 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 )
 
-const options = ["Label", "Summary", "ID"]
+const options = ["Descriptor", "Summary", "ID"]
 
 const getDropdownValues = (tags: string[], options: string[]) => {
   // if last element in tags array is a search property then we need to
   // fetch data, otherwise it should display a list of the properties
   return options.map((item) => item)
 }
+
+// const lastVal = value[value.length - 1]
+// const prevLastVal = value[value.length - 2]
+// // need to look at last two tags
+// if (!options.includes(lastVal)) {
+//   const oldTags = tags.splice(tags.length - 2, 2)
+//   const newTag = `${prevLastVal}:${lastVal}`
+//   console.log(oldTags)
+//   setTags([...oldTags, newTag])
+// }
 
 // const getTagDisplays = () => {}
 
@@ -38,6 +48,7 @@ const SearchBox = () => {
   const handleChange = (event: React.ChangeEvent<{}>, value: string[]) => {
     event.preventDefault()
     console.log(value)
+    // TODO: need to look at last two tags
     setTags([...tags, value[0]])
   }
 
@@ -52,9 +63,9 @@ const SearchBox = () => {
         onChange={handleChange}
         renderTags={(value: string[], getTagProps) =>
           value.map((option: string, index: number) => {
-            if (tags.includes(option)) {
-              return <span key={index}>{option}:</span>
-            }
+            // if (tags.includes(option)) {
+            //   return <span key={index}>{option}:</span>
+            // }
             return (
               <Chip
                 variant="outlined"
