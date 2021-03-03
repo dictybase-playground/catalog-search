@@ -25,9 +25,9 @@ const CatalogContainer = () => {
   return (
     <Box m={2} display="flex" flexDirection="row" alignItems="center">
       <FilterDropdown
-        options={filterOptions}
+        filterOptions={filterOptions}
         handleChange={handleChange}
-        value={filter}
+        filter={filter}
       />
       <SearchBox tags={tags} setTags={setTags} />
     </Box>
