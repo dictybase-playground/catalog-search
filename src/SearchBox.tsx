@@ -42,7 +42,6 @@ const SearchBox = ({ tags, setTags }: Props) => {
   const classes = useStyles()
 
   const handleChange = (event: React.ChangeEvent<{}>, value: string[]) => {
-    event.preventDefault()
     setTags(value)
   }
 
