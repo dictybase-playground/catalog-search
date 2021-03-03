@@ -53,7 +53,7 @@ const SearchBox = () => {
   }
 
   return (
-    <div className={classes.root}>
+    <span className={classes.root}>
       <Autocomplete
         multiple
         id="strain-catalog"
@@ -85,7 +85,7 @@ const SearchBox = () => {
           />
         )}
       />
-    </div>
+    </span>
   )
 }
 
