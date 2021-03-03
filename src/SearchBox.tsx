@@ -15,11 +15,11 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const options = ["Descriptor", "Summary", "ID"]
 
-const getDropdownValues = (tags: string[], options: string[]) => {
-  // if last element in tags array is a search property then we need to
-  // fetch data, otherwise it should display a list of the properties
-  return options.map((item) => item)
-}
+// const getDropdownValues = (tags: string[], options: string[]) => {
+// if last element in tags array is a search property then we need to
+// fetch data, otherwise it should display a list of the properties
+//   return options.map((item) => item)
+// }
 
 // const getTagDisplays = () => {}
 
@@ -31,15 +31,19 @@ const getDropdownValues = (tags: string[], options: string[]) => {
  * 3. After user enters value, turn this into a Chip
  */
 
-const SearchBox = () => {
+type Props = {
+  /** List of tags currently selected */
+  tags: string[]
+  /** Function to change tags state */
+  setTags: (arg0: string[]) => void
+}
+
+const SearchBox = ({ tags, setTags }: Props) => {
   const classes = useStyles()
-  const [tags, setTags] = React.useState<string[]>([])
 
   const handleChange = (event: React.ChangeEvent<{}>, value: string[]) => {
     event.preventDefault()
-    console.log(value)
-    // TODO: need to look at last two tags
-    setTags([...tags, value[0]])
+    setTags(value)
   }
 
   return (
@@ -47,12 +51,13 @@ const SearchBox = () => {
       <Autocomplete
         multiple
         id="strain-catalog"
-        options={getDropdownValues(tags, options)}
+        options={options.map((item) => item)}
         freeSolo
         filterSelectedOptions
         onChange={handleChange}
-        renderTags={(value: string[], getTagProps) =>
-          value.map((option: string, index: number) => {
+        value={tags}
+        renderTags={(value: string[], getTagProps) => {
+          return value.map((option: string, index: number) => {
             return (
               <Chip
                 variant="outlined"
@@ -62,7 +67,7 @@ const SearchBox = () => {
               />
             )
           })
-        }
+        }}
         renderInput={(params) => (
           <TextField
             {...params}
