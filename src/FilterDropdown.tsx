@@ -17,17 +17,17 @@ const useStyles = makeStyles((theme: Theme) => ({
 }))
 
 type Props = {
-  /** List of options to display in dropdown */
-  options: string[]
+  /** List of filters to display in dropdown */
+  filterOptions: string[]
   /** Callback used on item select */
   handleChange: (
     event: React.ChangeEvent<{ name?: string; value: any }>,
   ) => void
-  /** Selected value */
-  value: string
+  /** Selected filter */
+  filter: string
 }
 
-const FilterDropdown = ({ options, handleChange, value }: Props) => {
+const FilterDropdown = ({ filterOptions, handleChange, filter }: Props) => {
   const classes = useStyles()
 
   return (
@@ -36,7 +36,7 @@ const FilterDropdown = ({ options, handleChange, value }: Props) => {
         <Select
           native
           onChange={handleChange}
-          value={value}
+          value={filter}
           input={
             <Input
               disableUnderline
@@ -48,7 +48,7 @@ const FilterDropdown = ({ options, handleChange, value }: Props) => {
             />
           }>
           <option aria-label="None" value="" />
-          {options.map((item, index) => (
+          {filterOptions.map((item, index) => (
             <option value={item} key={index}>
               {item}
             </option>
