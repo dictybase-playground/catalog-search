@@ -19,7 +19,7 @@ const CatalogContainer = () => {
   ) => {
     const val = event.target.value
     setFilter(val)
-    setTags([...tags, `List: ${val}`])
+    setTags([`List: ${val}`])
   }
 
   return (
