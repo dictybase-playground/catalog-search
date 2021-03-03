@@ -11,12 +11,15 @@ const filterOptions = [
 ]
 
 const CatalogContainer = () => {
-  const [filter, setFilter] = React.useState("")
+  const [filter, setFilter] = React.useState<string>("")
+  const [tags, setTags] = React.useState<string[]>([])
 
   const handleChange = (
     event: React.ChangeEvent<{ name?: string; value: any }>,
   ) => {
-    setFilter(event.target.value)
+    const val = event.target.value
+    setFilter(val)
+    setTags([...tags, `List: ${val}`])
   }
 
   return (
@@ -26,7 +29,7 @@ const CatalogContainer = () => {
         handleChange={handleChange}
         value={filter}
       />
-      <SearchBox />
+      <SearchBox tags={tags} setTags={setTags} />
     </Box>
   )
 }
