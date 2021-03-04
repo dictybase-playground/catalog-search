@@ -1,16 +1,16 @@
 type CatalogState = {
-  filter: string
+  presetFilter: string
   tags: string[]
 }
 
 enum CatalogActionType {
-  SET_FILTER = "SET_FILTER",
+  SET_PRESET_FILTER = "SET_PRESET_FILTER",
   SET_TAGS = "SET_TAGS",
 }
 
 type Action =
   | {
-      type: CatalogActionType.SET_FILTER
+      type: CatalogActionType.SET_PRESET_FILTER
       payload: string
     }
   | {
