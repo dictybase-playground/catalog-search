@@ -15,7 +15,7 @@ describe("CatalogContainer", () => {
       const dropdown = screen.getAllByRole("combobox")[0]
       userEvent.selectOptions(dropdown, "GWDI Strains")
       const chip = screen.getByRole("button", {
-        name: "List: GWDI Strains",
+        name: "Type: GWDI",
       })
       expect(chip).toBeInTheDocument()
     })
