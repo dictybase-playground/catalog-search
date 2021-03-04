@@ -1,0 +1,27 @@
+name: Test Coverage
+on:
+  pull_request:
+    types: [edited, labeled, opened, synchronize, reopened]
+jobs:
+  test:
+    name: Unit tests
+    runs-on: ubuntu-20.04
+    steps:
+      - name: set up node.js
+        uses: actions/setup-node@v2.1.5
+        with:
+          node-version: 14.15.0
+      - name: check out code
+        uses: actions/checkout@v2
+      - name: install
+        run: yarn install
+      - name: run typescript build
+        run: yarn tsc
+      - name: run unit tests
+        run: yarn test-coverage
+        env:
+          CI: true
+      - name: upload test coverage to codecov
+        uses: codecov/codecov-action@v1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
