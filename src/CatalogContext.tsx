@@ -38,11 +38,15 @@ const CatalogProvider = ({ children }: { children: React.ReactNode }) => {
 }
 
 const useCatalogStore = () => {
-  const context = React.useContext(CatalogContext)
-  if (!context) {
-    throw new Error("useCatalogStore must be used within a CatalogProvider")
+  const { state, dispatch } = React.useContext(CatalogContext)
+
+  const setFilter = (filter: string) =>
+    dispatch({ type: CatalogActionType.SET_FILTER, payload: filter })
+
+  return {
+    state,
+    setFilter,
   }
-  return context
 }
 
 export { CatalogContext, CatalogProvider, useCatalogStore }
