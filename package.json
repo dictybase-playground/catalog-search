@@ -61,5 +61,17 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "jest": {
+    "collectCoverageFrom": [
+      "!src/hooks/useApolloClient.tsx",
+      "!src/App.tsx",
+      "!src/DownArrowIcon.tsx",
+      "!src/index.tsx",
+      "!src/reportWebVitals.ts",
+      "!src/react-app-env.d.ts",
+      "!src/types/*.{ts,tsx}"
+    ],
+    "resetMocks": false
   }
 }
