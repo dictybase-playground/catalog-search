@@ -7,7 +7,9 @@ import {
 } from "./types/context"
 
 const initialState = {
+  /** Value of preset filter dropdown menu */
   presetFilter: "Filters",
+  /** List of tags shown in search box */
   tags: [],
 }
 
