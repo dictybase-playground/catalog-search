@@ -8,6 +8,7 @@ import {
 
 const initialState = {
   filter: "Filters",
+  tags: [],
 }
 
 const catalogReducer = (state: CatalogState, action: Action) => {
@@ -16,6 +17,11 @@ const catalogReducer = (state: CatalogState, action: Action) => {
       return {
         ...state,
         filter: action.payload,
+      }
+    case CatalogActionType.SET_TAGS:
+      return {
+        ...state,
+        tags: action.payload,
       }
     default:
       return state
@@ -43,9 +49,13 @@ const useCatalogStore = () => {
   const setFilter = (filter: string) =>
     dispatch({ type: CatalogActionType.SET_FILTER, payload: filter })
 
+  const setTags = (tags: string[]) =>
+    dispatch({ type: CatalogActionType.SET_TAGS, payload: tags })
+
   return {
     state,
     setFilter,
+    setTags,
   }
 }
 

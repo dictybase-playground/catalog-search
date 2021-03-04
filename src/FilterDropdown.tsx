@@ -5,6 +5,13 @@ import Select from "@material-ui/core/Select"
 import Input from "@material-ui/core/Input"
 import { useCatalogStore } from "./CatalogContext"
 
+const filterOptions = [
+  "Regular Strains",
+  "GWDI Strains",
+  "All Available Strains",
+  "Bacterial Strains",
+]
+
 const useStyles = makeStyles((theme: Theme) => ({
   filter: {
     minWidth: "200px",
@@ -20,18 +27,21 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }))
 
-type Props = {
-  /** List of filters to display in dropdown */
-  filterOptions: string[]
-  /** Callback used on item select */
-  handleChange: (
-    event: React.ChangeEvent<{ name?: string; value: any }>,
-  ) => void
-}
-
-const FilterDropdown = ({ filterOptions, handleChange }: Props) => {
+const FilterDropdown = () => {
   const classes = useStyles()
-  const { state } = useCatalogStore()
+  const {
+    state: { filter },
+    setFilter,
+    setTags,
+  } = useCatalogStore()
+
+  const handleChange = (
+    event: React.ChangeEvent<{ name?: string; value: any }>,
+  ) => {
+    const val = event.target.value
+    setFilter(val)
+    setTags([`List: ${val}`])
+  }
 
   return (
     <span className={classes.filter}>
@@ -39,7 +49,7 @@ const FilterDropdown = ({ filterOptions, handleChange }: Props) => {
         <Select
           native
           onChange={handleChange}
-          value={state.filter}
+          value={filter}
           input={
             <Input
               disableUnderline
