@@ -1,25 +1,13 @@
 import React from "react"
-
-type CatalogState = {
-  filter: string
-}
-
-enum CatalogActionType {
-  SET_FILTER = "SET_FILTER",
-}
-
-type Action = {
-  type: CatalogActionType.SET_FILTER
-  payload: string
-}
+import {
+  CatalogState,
+  CatalogActionType,
+  Action,
+  CatalogContextProps,
+} from "./types/context"
 
 const initialState = {
   filter: "",
-}
-
-type CatalogContextProps = {
-  state: CatalogState
-  dispatch: React.Dispatch<Action>
 }
 
 const catalogReducer = (state: CatalogState, action: Action) => {
