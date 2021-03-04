@@ -2,11 +2,16 @@ import React from "react"
 import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import CatalogContainer from "./CatalogContainer"
+import { CatalogProvider } from "./CatalogContext"
 
 describe("CatalogContainer", () => {
   describe("using dropdown menu", () => {
     it("should add search tag on click", () => {
-      render(<CatalogContainer />)
+      render(
+        <CatalogProvider>
+          <CatalogContainer />
+        </CatalogProvider>,
+      )
       const dropdown = screen.getAllByRole("combobox")[0]
       userEvent.selectOptions(dropdown, "GWDI Strains")
       const chip = screen.getByRole("button", {
@@ -16,7 +21,11 @@ describe("CatalogContainer", () => {
     })
 
     it("should remove search tag on click", () => {
-      render(<CatalogContainer />)
+      render(
+        <CatalogProvider>
+          <CatalogContainer />
+        </CatalogProvider>,
+      )
       const dropdown = screen.getAllByRole("combobox")[0]
       userEvent.selectOptions(dropdown, "GWDI Strains")
       const chip = screen.getByRole("button", {
@@ -33,7 +42,11 @@ describe("CatalogContainer", () => {
     })
 
     it("should only display one list tag at a time", async () => {
-      render(<CatalogContainer />)
+      render(
+        <CatalogProvider>
+          <CatalogContainer />
+        </CatalogProvider>,
+      )
       const dropdown = screen.getAllByRole("combobox")[0]
       userEvent.selectOptions(dropdown, "GWDI Strains")
       const gwdiChip = screen.getByRole("button", {
