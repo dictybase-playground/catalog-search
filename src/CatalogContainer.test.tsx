@@ -29,7 +29,7 @@ describe("CatalogContainer", () => {
       const dropdown = screen.getAllByRole("combobox")[0]
       userEvent.selectOptions(dropdown, "GWDI Strains")
       const chip = screen.getByRole("button", {
-        name: "List: GWDI Strains",
+        name: "Type: GWDI",
       })
       expect(chip).toBeInTheDocument()
       const clear = screen.getByRole("button", {
@@ -50,18 +50,18 @@ describe("CatalogContainer", () => {
       const dropdown = screen.getAllByRole("combobox")[0]
       userEvent.selectOptions(dropdown, "GWDI Strains")
       const gwdiChip = screen.getByRole("button", {
-        name: "List: GWDI Strains",
+        name: "Type: GWDI",
       })
       expect(gwdiChip).toBeInTheDocument()
       // select different item
       userEvent.selectOptions(dropdown, "Bacterial Strains")
       const bacterialChip = screen.getByRole("button", {
-        name: "List: Bacterial Strains",
+        name: "Type: Bacterial",
       })
       expect(bacterialChip).toBeInTheDocument()
       // verify gwdi chip has been removed
       const gwdi = screen.queryByRole("button", {
-        name: "List: GWDI Strains",
+        name: "Type: GWDI",
       })
       expect(gwdi).not.toBeInTheDocument()
     })
