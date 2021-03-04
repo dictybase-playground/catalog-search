@@ -12,17 +12,14 @@ const filterOptions = [
 ]
 
 const CatalogContainer = () => {
-  const {
-    state: { filter },
-    setFilter,
-  } = useCatalogStore()
+  const { setFilter } = useCatalogStore()
   const [tags, setTags] = React.useState<string[]>([])
 
   const handleChange = (
     event: React.ChangeEvent<{ name?: string; value: any }>,
   ) => {
     const val = event.target.value
-    setFilter(filter)
+    setFilter(val)
     setTags([`List: ${val}`])
   }
 
