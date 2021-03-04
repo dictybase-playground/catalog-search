@@ -7,7 +7,7 @@ import {
 } from "./types/context"
 
 const initialState = {
-  filter: "",
+  filter: "Filters",
 }
 
 const catalogReducer = (state: CatalogState, action: Action) => {

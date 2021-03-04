@@ -7,8 +7,11 @@ import { useCatalogStore } from "./CatalogContext"
 
 const useStyles = makeStyles((theme: Theme) => ({
   filter: {
-    // border: "1px solid grey",
     minWidth: "200px",
+    display: "flex",
+    justifyContent: "flex-end",
+    alignItems: "center",
+    paddingRight: theme.spacing(1),
   },
   select: {
     "&:focus": {
@@ -47,7 +50,9 @@ const FilterDropdown = ({ filterOptions, handleChange }: Props) => {
               }}
             />
           }>
-          <option aria-label="None" value="" />
+          <option value="Filters" disabled>
+            Filters
+          </option>
           {filterOptions.map((item, index) => (
             <option value={item} key={index}>
               {item}
