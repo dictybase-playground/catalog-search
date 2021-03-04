@@ -3,7 +3,7 @@ import Chip from "@material-ui/core/Chip"
 import Autocomplete from "@material-ui/lab/Autocomplete"
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles"
 import TextField from "@material-ui/core/TextField"
-// import mockStrains from "./mockStrains"
+import { useCatalogStore } from "./CatalogContext"
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -31,18 +31,20 @@ const options = ["Descriptor", "Summary", "ID"]
  * 3. After user enters value, turn this into a Chip
  */
 
-type Props = {
-  /** List of tags currently selected */
-  tags: string[]
-  /** Function to change tags state */
-  setTags: (arg0: string[]) => void
-}
-
-const SearchBox = ({ tags, setTags }: Props) => {
+const SearchBox = () => {
   const classes = useStyles()
+  const {
+    state: { tags },
+    setFilter,
+    setTags,
+  } = useCatalogStore()
 
   const handleChange = (event: React.ChangeEvent<{}>, value: string[]) => {
     setTags(value)
+    // go back to default filter if no tags listed
+    if (value.length === 0) {
+      setFilter("Filters")
+    }
   }
 
   return (
