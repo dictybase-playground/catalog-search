@@ -5,6 +5,8 @@ import { createStyles, makeStyles, Theme } from "@material-ui/core/styles"
 import TextField from "@material-ui/core/TextField"
 import { useCatalogStore } from "./CatalogContext"
 
+const options = ["Descriptor", "Summary", "ID"]
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -12,24 +14,6 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   }),
 )
-
-const options = ["Descriptor", "Summary", "ID"]
-
-// const getDropdownValues = (tags: string[], options: string[]) => {
-// if last element in tags array is a search property then we need to
-// fetch data, otherwise it should display a list of the properties
-//   return options.map((item) => item)
-// }
-
-// const getTagDisplays = () => {}
-
-/**
- * Logic to implement:
- *
- * 1. Adding tag shows the property (i.e. Label:)
- * 2. When user starts typing, fetch data that matches property/value
- * 3. After user enters value, turn this into a Chip
- */
 
 const SearchBox = () => {
   const classes = useStyles()

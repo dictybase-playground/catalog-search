@@ -5,12 +5,16 @@ import Select from "@material-ui/core/Select"
 import Input from "@material-ui/core/Input"
 import { useCatalogStore } from "./CatalogContext"
 
-const filterOptions = [
-  "Regular Strains",
-  "GWDI Strains",
-  "All Available Strains",
-  "Bacterial Strains",
-]
+type Filters = {
+  [key: string]: string[]
+}
+
+const presetFilters = {
+  "Regular Strains": ["Type: Regular"],
+  "GWDI Strains": ["Type: GWDI"],
+  "All Available Strains": ["Type: All", "Status: Available"],
+  "Bacterial Strains": ["Type: Bacterial"],
+} as Filters
 
 const useStyles = makeStyles((theme: Theme) => ({
   filter: {
@@ -40,7 +44,7 @@ const FilterDropdown = () => {
   ) => {
     const val = event.target.value
     setFilter(val)
-    setTags([`List: ${val}`])
+    setTags(presetFilters[val])
   }
 
   return (
@@ -63,7 +67,7 @@ const FilterDropdown = () => {
           <option value="Filters" disabled>
             Filters
           </option>
-          {filterOptions.map((item, index) => (
+          {Object.keys(presetFilters).map((item, index) => (
             <option value={item} key={index}>
               {item}
             </option>
