@@ -34,8 +34,8 @@ const useStyles = makeStyles((theme: Theme) => ({
 const FilterDropdown = () => {
   const classes = useStyles()
   const {
-    state: { filter },
-    setFilter,
+    state: { presetFilter },
+    setPresetFilter,
     setTags,
   } = useCatalogStore()
 
@@ -43,7 +43,7 @@ const FilterDropdown = () => {
     event: React.ChangeEvent<{ name?: string; value: any }>,
   ) => {
     const val = event.target.value
-    setFilter(val)
+    setPresetFilter(val)
     setTags(presetFilters[val])
   }
 
@@ -53,7 +53,7 @@ const FilterDropdown = () => {
         <Select
           native
           onChange={handleChange}
-          value={filter}
+          value={presetFilter}
           input={
             <Input
               disableUnderline

@@ -7,16 +7,16 @@ import {
 } from "./types/context"
 
 const initialState = {
-  filter: "Filters",
+  presetFilter: "Filters",
   tags: [],
 }
 
 const catalogReducer = (state: CatalogState, action: Action) => {
   switch (action.type) {
-    case CatalogActionType.SET_FILTER:
+    case CatalogActionType.SET_PRESET_FILTER:
       return {
         ...state,
-        filter: action.payload,
+        presetFilter: action.payload,
       }
     case CatalogActionType.SET_TAGS:
       return {
@@ -46,15 +46,18 @@ const CatalogProvider = ({ children }: { children: React.ReactNode }) => {
 const useCatalogStore = () => {
   const { state, dispatch } = React.useContext(CatalogContext)
 
-  const setFilter = (filter: string) =>
-    dispatch({ type: CatalogActionType.SET_FILTER, payload: filter })
+  const setPresetFilter = (presetFilter: string) =>
+    dispatch({
+      type: CatalogActionType.SET_PRESET_FILTER,
+      payload: presetFilter,
+    })
 
   const setTags = (tags: string[]) =>
     dispatch({ type: CatalogActionType.SET_TAGS, payload: tags })
 
   return {
     state,
-    setFilter,
+    setPresetFilter,
     setTags,
   }
 }

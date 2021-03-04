@@ -19,7 +19,7 @@ const SearchBox = () => {
   const classes = useStyles()
   const {
     state: { tags },
-    setFilter,
+    setPresetFilter,
     setTags,
   } = useCatalogStore()
 
@@ -27,7 +27,7 @@ const SearchBox = () => {
     setTags(value)
     // go back to default filter if no tags listed
     if (value.length === 0) {
-      setFilter("Filters")
+      setPresetFilter("Filters")
     }
   }
 
