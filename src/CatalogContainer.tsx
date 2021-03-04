@@ -2,6 +2,7 @@ import React from "react"
 import Box from "@material-ui/core/Box"
 import SearchBox from "./SearchBox"
 import FilterDropdown from "./FilterDropdown"
+import { useCatalogStore } from "./CatalogContext"
 
 const filterOptions = [
   "Regular Strains",
@@ -11,14 +12,17 @@ const filterOptions = [
 ]
 
 const CatalogContainer = () => {
-  const [filter, setFilter] = React.useState<string>("")
+  const {
+    state: { filter },
+    setFilter,
+  } = useCatalogStore()
   const [tags, setTags] = React.useState<string[]>([])
 
   const handleChange = (
     event: React.ChangeEvent<{ name?: string; value: any }>,
   ) => {
     const val = event.target.value
-    setFilter(val)
+    setFilter(filter)
     setTags([`List: ${val}`])
   }
 
@@ -27,7 +31,6 @@ const CatalogContainer = () => {
       <FilterDropdown
         filterOptions={filterOptions}
         handleChange={handleChange}
-        filter={filter}
       />
       <SearchBox tags={tags} setTags={setTags} />
     </Box>
