@@ -1,13 +1,14 @@
 # catalog-search
 
 [![License](https://img.shields.io/badge/License-BSD%202--Clause-blue.svg)](LICENSE)  
-[![Maintainability](https://badgen.net/codeclimate/maintainability/dictybase-playground/catalog-search)](https://codeclimate.com/github/dictybase-playground/catalog-search)  
 ![Last commit](https://badgen.net/github/last-commit/dictybase-playground/catalog-search/main)  
 [![Funding](https://badgen.net/badge/Funding/Rex%20L%20Chisholm,dictyBase,DCR/yellow?list=|)](https://projectreporter.nih.gov/project_info_description.cfm?aid=10024726&icde=0)
 
 This is a demo for the new stock catalog search feature.
 
 ![alt text](./docs/search-diagram.png "Search Catalog Diagram")
+
+[Global State](./docs/global-state.md) - documentation about all state stored in the global catalog context
 
 ## Misc badges
 
@@ -23,4 +24,3 @@ This is a demo for the new stock catalog search feature.
 ![Tags](https://badgen.net/github/tags/dictybase-playground/catalog-search)  
 ![GitHub repo size](https://img.shields.io/github/repo-size/dictybase-playground/catalog-search?style=plastic)
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/dictybase-playground/catalog-search?style=plastic)
-[![Lines of Code](https://badgen.net/codeclimate/loc/dictybase-playground/catalog-search)](https://codeclimate.com/github/dictybase-playground/catalog-search/code)
