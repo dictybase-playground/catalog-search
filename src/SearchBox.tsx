@@ -21,6 +21,7 @@ const SearchBox = () => {
     state: { activeFilters },
     setPresetFilter,
     setActiveFilters,
+    setGraphQLFilter,
   } = useCatalogStore()
 
   const handleChange = (event: React.ChangeEvent<{}>, value: string[]) => {
@@ -28,6 +29,7 @@ const SearchBox = () => {
     // go back to default filter if no tags listed
     if (value.length === 0) {
       setPresetFilter("Filters")
+      setGraphQLFilter("")
     }
   }
 
