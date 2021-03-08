@@ -69,7 +69,7 @@ const useCatalogStore = () => {
 
   const setGraphQLFilter = (graphQLFilter: string) =>
     dispatch({
-      type: CatalogActionType.SET_PRESET_FILTER,
+      type: CatalogActionType.SET_GRAPHQL_FILTER,
       payload: graphQLFilter,
     })
 
