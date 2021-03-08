@@ -9,8 +9,8 @@ import {
 const initialState = {
   /** Value of preset filter dropdown menu */
   presetFilter: "Filters",
-  /** List of tags shown in search box */
-  tags: [],
+  /** List of active filters shown in search box (as tags) */
+  activeFilters: [],
 }
 
 const catalogReducer = (state: CatalogState, action: Action) => {
@@ -20,10 +20,10 @@ const catalogReducer = (state: CatalogState, action: Action) => {
         ...state,
         presetFilter: action.payload,
       }
-    case CatalogActionType.SET_TAGS:
+    case CatalogActionType.SET_ACTIVE_FILTERS:
       return {
         ...state,
-        tags: action.payload,
+        activeFilters: action.payload,
       }
     default:
       return state
@@ -54,13 +54,16 @@ const useCatalogStore = () => {
       payload: presetFilter,
     })
 
-  const setTags = (tags: string[]) =>
-    dispatch({ type: CatalogActionType.SET_TAGS, payload: tags })
+  const setActiveFilters = (activeFilters: string[]) =>
+    dispatch({
+      type: CatalogActionType.SET_ACTIVE_FILTERS,
+      payload: activeFilters,
+    })
 
   return {
     state,
     setPresetFilter,
-    setTags,
+    setActiveFilters,
   }
 }
 

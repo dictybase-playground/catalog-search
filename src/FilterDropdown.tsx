@@ -36,7 +36,7 @@ const FilterDropdown = () => {
   const {
     state: { presetFilter },
     setPresetFilter,
-    setTags,
+    setActiveFilters,
   } = useCatalogStore()
 
   const handleChange = (
@@ -44,7 +44,7 @@ const FilterDropdown = () => {
   ) => {
     const val = event.target.value
     setPresetFilter(val)
-    setTags(presetFilters[val])
+    setActiveFilters(presetFilters[val])
   }
 
   return (

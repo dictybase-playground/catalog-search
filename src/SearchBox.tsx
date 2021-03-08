@@ -18,13 +18,13 @@ const useStyles = makeStyles((theme: Theme) =>
 const SearchBox = () => {
   const classes = useStyles()
   const {
-    state: { tags },
+    state: { activeFilters },
     setPresetFilter,
-    setTags,
+    setActiveFilters,
   } = useCatalogStore()
 
   const handleChange = (event: React.ChangeEvent<{}>, value: string[]) => {
-    setTags(value)
+    setActiveFilters(value)
     // go back to default filter if no tags listed
     if (value.length === 0) {
       setPresetFilter("Filters")
@@ -40,7 +40,7 @@ const SearchBox = () => {
         freeSolo
         filterSelectedOptions
         onChange={handleChange}
-        value={tags}
+        value={activeFilters}
         renderTags={(value: string[], getTagProps) => {
           return value.map((option: string, index: number) => {
             return (
