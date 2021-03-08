@@ -11,6 +11,8 @@ const initialState = {
   presetFilter: "Filters",
   /** List of active filters shown in search box (as tags) */
   activeFilters: [],
+  /** Corresponding filter to use for GraphQL query */
+  graphQLFilter: "",
 }
 
 const catalogReducer = (state: CatalogState, action: Action) => {
@@ -24,6 +26,11 @@ const catalogReducer = (state: CatalogState, action: Action) => {
       return {
         ...state,
         activeFilters: action.payload,
+      }
+    case CatalogActionType.SET_GRAPHQL_FILTER:
+      return {
+        ...state,
+        graphQLFilter: action.payload,
       }
     default:
       return state
@@ -60,10 +67,17 @@ const useCatalogStore = () => {
       payload: activeFilters,
     })
 
+  const setGraphQLFilter = (graphQLFilter: string) =>
+    dispatch({
+      type: CatalogActionType.SET_PRESET_FILTER,
+      payload: graphQLFilter,
+    })
+
   return {
     state,
     setPresetFilter,
     setActiveFilters,
+    setGraphQLFilter,
   }
 }
 
