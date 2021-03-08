@@ -5,13 +5,17 @@ import SearchBox from "./SearchBox"
 import FilterDropdown from "./FilterDropdown"
 import CatalogList from "./CatalogList"
 import { GET_STRAIN_LIST } from "./graphql/query"
+import { useCatalogStore } from "./CatalogContext"
 
 const CatalogContainer = () => {
+  const {
+    state: { graphQLFilter },
+  } = useCatalogStore()
   const { loading, error, data } = useQuery(GET_STRAIN_LIST, {
     variables: {
       cursor: 0,
       limit: 10,
-      filter: "",
+      filter: graphQLFilter,
     },
   })
 
