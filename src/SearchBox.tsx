@@ -36,7 +36,7 @@ const SearchBox = () => {
       <Autocomplete
         multiple
         id="strain-catalog"
-        options={options.map((item) => item)}
+        options={options}
         freeSolo
         filterSelectedOptions
         onChange={handleChange}
