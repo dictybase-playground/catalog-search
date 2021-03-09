@@ -23,8 +23,8 @@ describe("CatalogContainer", () => {
         query: GET_STRAIN_LIST,
         variables: {
           cursor: 0,
-          filter: "",
           limit: 10,
+          filter: "",
         },
       },
       result: {
@@ -38,8 +38,8 @@ describe("CatalogContainer", () => {
         query: GET_STRAIN_LIST,
         variables: {
           cursor: 0,
-          filter: "stock_type=~bacterial",
           limit: 10,
+          filter: "stock_type=bacterial",
         },
       },
       result: {
@@ -48,9 +48,25 @@ describe("CatalogContainer", () => {
         },
       },
     },
+    {
+      request: {
+        query: GET_STRAIN_LIST,
+        variables: {
+          cursor: 0,
+          limit: 10,
+          filter: "stock_type=regular",
+        },
+      },
+      result: {
+        data: {
+          listStrains: mockStrains,
+        },
+      },
+    },
   ]
 
   const mockItem = `${mockStrains.strains[0].id} - ${mockStrains.strains[0].label}`
+  const mockBacterialItem = `${mockBacterialStrains.strains[0].id} - ${mockBacterialStrains.strains[0].label}`
 
   describe("using dropdown menu", () => {
     it("should add search tag on click", async () => {
@@ -58,10 +74,12 @@ describe("CatalogContainer", () => {
       // wait for data to load...
       const firstRow = await screen.findByText(mockItem)
       expect(firstRow).toBeInTheDocument()
+      // select dropdown item
       const dropdown = screen.getAllByRole("combobox")[0]
-      userEvent.selectOptions(dropdown, "GWDI Strains")
+      userEvent.selectOptions(dropdown, "Bacterial Strains")
+      // wait for chip to appear in searchbox
       const chip = await screen.findByRole("button", {
-        name: "stock_type: GWDI",
+        name: "stock_type: bacterial",
       })
       expect(chip).toBeInTheDocument()
     })
@@ -71,12 +89,15 @@ describe("CatalogContainer", () => {
       // wait for data to load...
       const firstRow = await screen.findByText(mockItem)
       expect(firstRow).toBeInTheDocument()
+      // select dropdown item
       const dropdown = screen.getAllByRole("combobox")[0]
-      userEvent.selectOptions(dropdown, "GWDI Strains")
-      const chip = screen.getByRole("button", {
-        name: "stock_type: GWDI",
+      userEvent.selectOptions(dropdown, "Bacterial Strains")
+      // wait for chip to appear in searchbox
+      const chip = await screen.findByRole("button", {
+        name: "stock_type: bacterial",
       })
       expect(chip).toBeInTheDocument()
+      // find clear button
       const clear = screen.getByRole("button", {
         name: "Clear",
       })
@@ -91,23 +112,30 @@ describe("CatalogContainer", () => {
       // wait for data to load...
       const firstRow = await screen.findByText(mockItem)
       expect(firstRow).toBeInTheDocument()
+      // select dropdown item
       const dropdown = screen.getAllByRole("combobox")[0]
-      userEvent.selectOptions(dropdown, "GWDI Strains")
-      const gwdiChip = screen.getByRole("button", {
-        name: "stock_type: GWDI",
-      })
-      expect(gwdiChip).toBeInTheDocument()
-      // select different item
       userEvent.selectOptions(dropdown, "Bacterial Strains")
+      // wait for chip to appear in searchbox
       const bacterialChip = await screen.findByRole("button", {
         name: "stock_type: bacterial",
       })
       expect(bacterialChip).toBeInTheDocument()
-      // verify gwdi chip has been removed
-      const gwdi = screen.queryByRole("button", {
-        name: "stock_type: GWDI",
+      // wait for data to appear
+      const firstBacterialRow = await screen.findByText(mockBacterialItem)
+      expect(firstBacterialRow).toBeInTheDocument()
+      // select different item
+      const updatedDropdown = screen.getAllByRole("combobox")[0]
+      userEvent.selectOptions(updatedDropdown, "Regular Strains")
+      // wait for new chip to appear
+      const regChip = await screen.findByRole("button", {
+        name: "stock_type: regular",
       })
-      expect(gwdi).not.toBeInTheDocument()
+      expect(regChip).toBeInTheDocument()
+      // verify (old) bacterial chip has been removed
+      const bacterial = screen.queryByRole("button", {
+        name: "stock_type: bacterial",
+      })
+      expect(bacterial).not.toBeInTheDocument()
     })
   })
 })
