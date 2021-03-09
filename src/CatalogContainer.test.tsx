@@ -1,7 +1,7 @@
 import { MockedProvider } from "@apollo/client/testing"
 import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
-import CatalogContainer from "./CatalogContainer"
+import CatalogContainer, { convertFiltersToGraphQL } from "./CatalogContainer"
 import { CatalogProvider } from "./CatalogContext"
 import { GET_STRAIN_LIST } from "./graphql/query"
 import { mockStrains, mockBacterialStrains } from "./mockStrains"
@@ -39,7 +39,7 @@ describe("CatalogContainer", () => {
         variables: {
           cursor: 0,
           limit: 10,
-          filter: "stock_type=bacterial",
+          filter: "stock_type==bacterial",
         },
       },
       result: {
@@ -54,7 +54,7 @@ describe("CatalogContainer", () => {
         variables: {
           cursor: 0,
           limit: 10,
-          filter: "stock_type=regular",
+          filter: "stock_type==regular",
         },
       },
       result: {
@@ -137,5 +137,23 @@ describe("CatalogContainer", () => {
       })
       expect(bacterial).not.toBeInTheDocument()
     })
+  })
+})
+
+describe("convertFiltersToGraphQL function", () => {
+  it("should add strict equals for stock_type", () => {
+    expect(convertFiltersToGraphQL(["stock_type: all"])).toEqual(
+      "stock_type==all",
+    )
+  })
+  it("should add strict equals for in_stock", () => {
+    expect(convertFiltersToGraphQL(["in_stock: true"])).toEqual(
+      "in_stock==true",
+    )
+  })
+  it("should add substrings and AND operator", () => {
+    expect(convertFiltersToGraphQL(["stock_type: all", "label: sad"])).toEqual(
+      "stock_type==all;label~=sad",
+    )
   })
 })
