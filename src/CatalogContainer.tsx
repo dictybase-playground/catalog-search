@@ -7,8 +7,18 @@ import CatalogList from "./CatalogList"
 import { GET_STRAIN_LIST } from "./graphql/query"
 import { useCatalogStore } from "./CatalogContext"
 
+// convert the active filters to a proper graphql filter string
+// i.e. ["stock_type: all", "label: sad"]
+// equals stock_type==all;label~=true
 const convertFiltersToGraphQL = (filters: string[]) => {
-  return filters.map((item) => item.replace(": ", "=")).join(",")
+  return filters
+    .map((item, index) => {
+      if (index === 0 || item.includes("in_stock")) {
+        return item.replace(": ", "==")
+      }
+      return item.replace(": ", "~=")
+    })
+    .join(";")
 }
 
 const CatalogContainer = () => {
