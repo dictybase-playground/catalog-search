@@ -1,21 +1,11 @@
 import React from "react"
 import Box from "@material-ui/core/Box"
-
-type ListStrains = {
-  listStrains: {
-    nextCursor: number
-    totalCount: number
-    strains: Array<{
-      id: string
-      label: string
-      summary: string
-      in_stock: boolean
-    }>
-  }
-}
+import { ListStrains } from "./types/strain"
 
 type Props = {
-  data: ListStrains
+  data: {
+    listStrains: ListStrains
+  }
 }
 
 const CatalogList = ({ data }: Props) => {
