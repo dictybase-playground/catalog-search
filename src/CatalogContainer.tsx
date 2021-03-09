@@ -8,7 +8,7 @@ import { GET_STRAIN_LIST } from "./graphql/query"
 import { useCatalogStore } from "./CatalogContext"
 
 const convertFiltersToGraphQL = (filters: string[]) => {
-  return filters.map((item) => item.replace(": ", "=~")).join(",")
+  return filters.map((item) => item.replace(": ", "=")).join(",")
 }
 
 const CatalogContainer = () => {
