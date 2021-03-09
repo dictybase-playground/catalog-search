@@ -16,10 +16,6 @@ const presetFilters = {
   "Bacterial Strains": ["stock_type: bacterial"],
 } as Filters
 
-const convertFiltersToGraphQL = (filters: string[]) => {
-  return filters.map((item) => item.replace(": ", "=")).join(",")
-}
-
 const useStyles = makeStyles((theme: Theme) => ({
   filter: {
     minWidth: "200px",
@@ -38,10 +34,9 @@ const useStyles = makeStyles((theme: Theme) => ({
 const FilterDropdown = () => {
   const classes = useStyles()
   const {
-    state: { presetFilter, activeFilters },
+    state: { presetFilter },
     setPresetFilter,
     setActiveFilters,
-    setGraphQLFilter,
   } = useCatalogStore()
 
   const handleChange = (
@@ -50,7 +45,6 @@ const FilterDropdown = () => {
     const val = event.target.value
     setPresetFilter(val)
     setActiveFilters(presetFilters[val])
-    setGraphQLFilter(convertFiltersToGraphQL(activeFilters))
   }
 
   return (
