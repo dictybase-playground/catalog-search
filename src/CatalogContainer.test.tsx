@@ -38,7 +38,7 @@ describe("CatalogContainer", () => {
         query: GET_STRAIN_LIST,
         variables: {
           cursor: 0,
-          filter: "stock_type=GWDI",
+          filter: "stock_type=~bacterial",
           limit: 10,
         },
       },
@@ -60,7 +60,7 @@ describe("CatalogContainer", () => {
       expect(firstRow).toBeInTheDocument()
       const dropdown = screen.getAllByRole("combobox")[0]
       userEvent.selectOptions(dropdown, "GWDI Strains")
-      const chip = screen.getByRole("button", {
+      const chip = await screen.findByRole("button", {
         name: "stock_type: GWDI",
       })
       expect(chip).toBeInTheDocument()
