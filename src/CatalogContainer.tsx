@@ -12,8 +12,8 @@ import { useCatalogStore } from "./CatalogContext"
 // equals stock_type==all;label~=true
 const convertFiltersToGraphQL = (filters: string[]) => {
   return filters
-    .map((item, index) => {
-      if (index === 0 || item.includes("in_stock")) {
+    .map((item) => {
+      if (item.includes("stock_type") || item.includes("in_stock")) {
         return item.replace(": ", "==")
       }
       return item.replace(": ", "~=")
@@ -55,4 +55,5 @@ const CatalogContainer = () => {
   )
 }
 
+export { convertFiltersToGraphQL }
 export default CatalogContainer
