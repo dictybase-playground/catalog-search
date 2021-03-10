@@ -12,7 +12,7 @@ type Filters = {
 const presetFilters = {
   "Regular Strains": ["stock_type: regular"],
   "GWDI Strains": ["stock_type: GWDI"],
-  "All Available Strains": ["stock_type: all", "in_stock: true"],
+  "Available Regular Strains": ["stock_type: regular", "in_stock: true"],
   "Bacterial Strains": ["stock_type: bacterial"],
 } as Filters
 
