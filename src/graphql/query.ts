@@ -15,4 +15,70 @@ const GET_STRAIN_LIST = gql`
   }
 `
 
-export { GET_STRAIN_LIST }
+const GET_REGULAR_STRAIN_LIST = gql`
+  query RegularStrainList($cursor: Int!, $limit: Int!) {
+    listRegularStrains(cursor: $cursor, limit: $limit) {
+      nextCursor
+      totalCount
+      strains {
+        id
+        label
+        summary
+        in_stock
+      }
+    }
+  }
+`
+
+const GET_GWDI_STRAIN_LIST = gql`
+  query GWDIStrainList($cursor: Int!, $limit: Int!) {
+    listGWDIStrains(cursor: $cursor, limit: $limit) {
+      nextCursor
+      totalCount
+      strains {
+        id
+        label
+        summary
+        in_stock
+      }
+    }
+  }
+`
+
+const GET_STRAIN_INVENTORY_LIST = gql`
+  query StrainInventoryList($cursor: Int!, $limit: Int!) {
+    listStrainsInventory(cursor: $cursor, limit: $limit) {
+      nextCursor
+      totalCount
+      strains {
+        id
+        label
+        summary
+        in_stock
+      }
+    }
+  }
+`
+
+const GET_BACTERIAL_STRAIN_LIST = gql`
+  query BacterialStrainList($cursor: Int!, $limit: Int!) {
+    listBacterialStrains(cursor: $cursor, limit: $limit) {
+      nextCursor
+      totalCount
+      strains {
+        id
+        label
+        summary
+        in_stock
+      }
+    }
+  }
+`
+
+export {
+  GET_STRAIN_LIST,
+  GET_REGULAR_STRAIN_LIST,
+  GET_GWDI_STRAIN_LIST,
+  GET_STRAIN_INVENTORY_LIST,
+  GET_BACTERIAL_STRAIN_LIST,
+}
