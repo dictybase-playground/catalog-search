@@ -4,7 +4,13 @@ import Box from "@material-ui/core/Box"
 import SearchBox from "./SearchBox"
 import FilterDropdown from "./FilterDropdown"
 import CatalogList from "./CatalogList"
-import { GET_STRAIN_LIST } from "./graphql/query"
+import {
+  GET_STRAIN_LIST,
+  GET_REGULAR_STRAIN_LIST,
+  GET_GWDI_STRAIN_LIST,
+  GET_STRAIN_INVENTORY_LIST,
+  GET_BACTERIAL_STRAIN_LIST,
+} from "./graphql/query"
 import { useCatalogStore } from "./CatalogContext"
 
 // convert the active filters to a proper graphql filter string
@@ -21,15 +27,55 @@ const convertFiltersToGraphQL = (filters: string[]) => {
     .join(";")
 }
 
+/**
+ * normalizeDataObject converts the GraphQL data response into a normalized object.
+ */
+const normalizeDataObject = (data: any) => {
+  let convertedData = data
+
+  if (data.listStrains) {
+    convertedData = data.listStrains
+  }
+  if (data.listRegularStrains) {
+    convertedData = data.listRegularStrains
+  }
+  if (data.listGWDIStrains) {
+    convertedData = data.listGWDIStrains
+  }
+  if (data.listStrainsInventory) {
+    convertedData = data.listStrainsInventory
+  }
+  if (data.listBacterialStrains) {
+    convertedData = data.listBacterialStrains
+  }
+
+  return convertedData
+}
+
+const getGraphQLQuery = (filter: string) => {
+  switch (filter) {
+    case "Regular Strains":
+      return GET_REGULAR_STRAIN_LIST
+    case "GWDI Strains":
+      return GET_GWDI_STRAIN_LIST
+    case "Available Regular Strains":
+      return GET_STRAIN_INVENTORY_LIST
+    case "Bacterial Strains":
+      return GET_BACTERIAL_STRAIN_LIST
+    default:
+      return GET_STRAIN_LIST
+  }
+}
+
 const CatalogContainer = () => {
   const {
-    state: { activeFilters },
+    state: { presetFilter },
   } = useCatalogStore()
-  const { loading, error, data } = useQuery(GET_STRAIN_LIST, {
+  const { loading, error, data } = useQuery(getGraphQLQuery(presetFilter), {
     variables: {
       cursor: 0,
       limit: 10,
-      filter: convertFiltersToGraphQL(activeFilters),
+      // filter: convertFiltersToGraphQL(activeFilters),
     },
   })
 
@@ -49,7 +95,7 @@ const CatalogContainer = () => {
         <SearchBox />
       </Box>
       <Box>
-        <CatalogList data={data} />
+        <CatalogList data={normalizeDataObject(data)} />
       </Box>
     </React.Fragment>
   )

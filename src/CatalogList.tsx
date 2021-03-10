@@ -1,17 +1,15 @@
 import React from "react"
 import Box from "@material-ui/core/Box"
-import { ListStrains } from "./types/strain"
+import { ListStrainsData } from "./types/strain"
 
 type Props = {
-  data: {
-    listStrains: ListStrains
-  }
+  data: ListStrainsData
 }
 
 const CatalogList = ({ data }: Props) => {
   return (
     <Box textAlign="center">
-      {data.listStrains.strains.map((item, index) => (
+      {data.strains.map((item, index) => (
         <div key={index}>
           {item.id} - {item.label}
         </div>
