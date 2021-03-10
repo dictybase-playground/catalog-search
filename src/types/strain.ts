@@ -1,4 +1,4 @@
-type ListStrains = {
+type ListStrainsData = {
   nextCursor: number
   totalCount: number
   strains: Array<{
@@ -9,4 +9,31 @@ type ListStrains = {
   }>
 }
 
-export type { ListStrains }
+type ListAllStrains = {
+  listStrains: ListStrainsData
+}
+
+type ListRegularStrains = {
+  listRegularStrains: ListStrainsData
+}
+
+type ListGWDIStrains = {
+  listGWDIStrains: ListStrainsData
+}
+
+type ListStrainsInventory = {
+  listStrainsInventory: ListStrainsData
+}
+
+type ListBacterialStrains = {
+  listBacterialStrains: ListStrainsData
+}
+
+type StrainLists =
+  | ListAllStrains
+  | ListRegularStrains
+  | ListGWDIStrains
+  | ListStrainsInventory
+  | ListBacterialStrains
+
+export type { ListStrainsData, StrainLists }
