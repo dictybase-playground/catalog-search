@@ -4,7 +4,7 @@ import userEvent from "@testing-library/user-event"
 import CatalogContainer, { convertFiltersToGraphQL } from "./CatalogContainer"
 import { CatalogProvider } from "./CatalogContext"
 import { GET_STRAIN_LIST } from "./graphql/query"
-import { mockStrains, mockBacterialStrains } from "./mockStrains"
+import { mockRegularStrains, mockBacterialStrains } from "./mocks/mockStrains"
 
 describe("CatalogContainer", () => {
   const MockComponent = ({ mocks = listMocks }: any) => {
@@ -28,9 +28,7 @@ describe("CatalogContainer", () => {
         },
       },
       result: {
-        data: {
-          listStrains: mockStrains,
-        },
+        data: mockRegularStrains,
       },
     },
     {
@@ -43,9 +41,7 @@ describe("CatalogContainer", () => {
         },
       },
       result: {
-        data: {
-          listStrains: mockBacterialStrains,
-        },
+        data: mockBacterialStrains,
       },
     },
     {
@@ -59,14 +55,14 @@ describe("CatalogContainer", () => {
       },
       result: {
         data: {
-          listStrains: mockStrains,
+          listStrains: mockRegularStrains,
         },
       },
     },
   ]
 
-  const mockItem = `${mockStrains.strains[0].id} - ${mockStrains.strains[0].label}`
-  const mockBacterialItem = `${mockBacterialStrains.strains[0].id} - ${mockBacterialStrains.strains[0].label}`
+  const mockItem = `${mockRegularStrains.listRegularStrains.strains[0].id} - ${mockRegularStrains.listRegularStrains.strains[0].label}`
+  const mockBacterialItem = `${mockRegularStrains.listRegularStrains.strains[0].id} - ${mockRegularStrains.listRegularStrains.strains[0].label}`
 
   describe("using dropdown menu", () => {
     it("should add search tag on click", async () => {
