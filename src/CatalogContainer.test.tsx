@@ -43,6 +43,7 @@ describe("CatalogContainer", () => {
         variables: {
           cursor: 0,
           limit: 10,
+          filter: "",
         },
       },
       result: {
@@ -55,6 +56,7 @@ describe("CatalogContainer", () => {
         variables: {
           cursor: 0,
           limit: 10,
+          filter: "",
         },
       },
       result: {
