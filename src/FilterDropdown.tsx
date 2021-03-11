@@ -37,19 +37,13 @@ const getGraphQLQueryVariables = (presetFilter: string) => {
     limit: 10,
     filter: "",
   }
-  switch (presetFilter) {
-    case "GWDI Strains":
-    case "Bacterial Strains":
-    case "Regular Strains":
-      return variables
-    case "Available Regular Strains":
-      return {
-        ...variables,
-        strain_type: "REGULAR",
-      }
-    default:
-      return variables
+  if (presetFilter === "Available Regular Strains") {
+    return {
+      ...variables,
+      strain_type: "REGULAR",
+    }
   }
+  return variables
 }
 
 const FilterDropdown = () => {
