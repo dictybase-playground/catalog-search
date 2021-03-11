@@ -72,6 +72,10 @@ const getGraphQLQuery = (filter: string) => {
   }
 }
 
+// TODO: get query based on the active filters, not just dropdowns
+// i.e. if filters include in_stock: true, then we need to change filter to
+// listStrainsInventory
+
 const CatalogContainer = () => {
   const {
     state: { presetFilter, activeFilters, queryVariables },
@@ -88,7 +92,6 @@ const CatalogContainer = () => {
   }
 
   if (error) {
-    console.log(error)
     return <div>got error</div>
   }
 
