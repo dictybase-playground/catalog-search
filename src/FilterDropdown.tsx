@@ -22,7 +22,13 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: "flex",
     justifyContent: "flex-end",
     alignItems: "center",
+    paddingLeft: theme.spacing(1),
     paddingRight: theme.spacing(1),
+    border: "1px #BDBDBD solid",
+    borderRight: "0px",
+    borderTopLeftRadius: "4px",
+    borderBottomLeftRadius: "4px",
+    fontSize: "0.9rem",
   },
   select: {
     "&:focus": {

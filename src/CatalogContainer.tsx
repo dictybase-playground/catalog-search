@@ -97,7 +97,7 @@ const CatalogContainer = () => {
 
   return (
     <React.Fragment>
-      <Box m={2} display="flex" flexDirection="row" alignItems="center">
+      <Box m={2} display="flex" flexDirection="row">
         <FilterDropdown />
         <SearchBox />
       </Box>
