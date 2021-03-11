@@ -31,20 +31,29 @@ const convertFiltersToGraphQL = (filters: string[]) => {
 const normalizeDataObject = (data: any) => {
   let convertedData = data
 
-  if (data.listStrains) {
-    convertedData = data.listStrains
-  }
-  if (data.listRegularStrains) {
-    convertedData = data.listRegularStrains
-  }
-  if (data.listGWDIStrains) {
-    convertedData = data.listGWDIStrains
-  }
-  if (data.listStrainsInventory) {
-    convertedData = data.listStrainsInventory
-  }
-  if (data.listBacterialStrains) {
-    convertedData = data.listBacterialStrains
+  switch (true) {
+    case data.hasOwnProperty("listStrains"): {
+      convertedData = data.listStrains
+      break
+    }
+    case data.hasOwnProperty("listRegularStrains"): {
+      convertedData = data.listRegularStrains
+      break
+    }
+    case data.hasOwnProperty("listGWDIStrains"): {
+      convertedData = data.listGWDIStrains
+      break
+    }
+    case data.hasOwnProperty("listStrainsInventory"): {
+      convertedData = data.listStrainsInventory
+      break
+    }
+    case data.hasOwnProperty("listBacterialStrains"): {
+      convertedData = data.listBacterialStrains
+      break
+    }
+    default:
+      return convertedData
   }
 
   return convertedData
