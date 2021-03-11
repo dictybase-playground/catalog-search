@@ -1,7 +1,10 @@
 import { MockedProvider } from "@apollo/client/testing"
 import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
-import CatalogContainer, { getQueryFilterString } from "./CatalogContainer"
+import CatalogContainer, {
+  getQueryFilterString,
+  normalizeDataObject,
+} from "./CatalogContainer"
 import { CatalogProvider } from "./CatalogContext"
 import {
   GET_BACTERIAL_STRAIN_LIST,
@@ -156,5 +159,44 @@ describe("getQueryFilterString function", () => {
     expect(
       getQueryFilterString(["strain_type: all", "label: sad", "summary: test"]),
     ).toEqual("label~=sad;summary~=test")
+  })
+})
+
+describe("normalizeDataObject function", () => {
+  it("should return listStrains", () => {
+    const strainObj = {
+      listStrains: "abc",
+    }
+    expect(normalizeDataObject(strainObj)).toEqual("abc")
+  })
+  it("should return listRegularStrains", () => {
+    const strainObj = {
+      listRegularStrains: "reg",
+    }
+    expect(normalizeDataObject(strainObj)).toEqual("reg")
+  })
+  it("should return listGWDIStrains", () => {
+    const strainObj = {
+      listGWDIStrains: "gwdi",
+    }
+    expect(normalizeDataObject(strainObj)).toEqual("gwdi")
+  })
+  it("should return listStrainsInventory", () => {
+    const strainObj = {
+      listStrainsInventory: "inv",
+    }
+    expect(normalizeDataObject(strainObj)).toEqual("inv")
+  })
+  it("should return listBacterialStrains", () => {
+    const strainObj = {
+      listBacterialStrains: "bac",
+    }
+    expect(normalizeDataObject(strainObj)).toEqual("bac")
+  })
+  it("should return same data for unexpectd object", () => {
+    const strainObj = {
+      foo: "bar",
+    }
+    expect(normalizeDataObject(strainObj)).toStrictEqual(strainObj)
   })
 })

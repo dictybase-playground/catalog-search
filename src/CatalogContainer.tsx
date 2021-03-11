@@ -105,5 +105,5 @@ const CatalogContainer = () => {
   )
 }
 
-export { getQueryFilterString }
+export { getQueryFilterString, normalizeDataObject }
 export default CatalogContainer
