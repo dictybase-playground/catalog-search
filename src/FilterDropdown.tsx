@@ -31,12 +31,36 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }))
 
+const getGraphQLQueryVariables = (presetFilter: string) => {
+  const variables = {
+    cursor: 0,
+    limit: 10,
+  }
+  switch (presetFilter) {
+    case "GWDI Strains":
+    case "Bacterial Strains":
+    case "Regular Strains":
+      return variables
+    case "Available Regular Strains":
+      return {
+        ...variables,
+        stock_type: "REGULAR",
+      }
+    default:
+      return {
+        ...variables,
+        filter: "",
+      }
+  }
+}
+
 const FilterDropdown = () => {
   const classes = useStyles()
   const {
     state: { presetFilter },
     setPresetFilter,
     setActiveFilters,
+    setQueryVariables,
   } = useCatalogStore()
 
   const handleChange = (
@@ -45,6 +69,8 @@ const FilterDropdown = () => {
     const val = event.target.value
     setPresetFilter(val)
     setActiveFilters(presetFilters[val])
+    const queryVars = getGraphQLQueryVariables(val)
+    setQueryVariables(queryVars)
   }
 
   return (
