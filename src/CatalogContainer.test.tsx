@@ -1,7 +1,7 @@
 import { MockedProvider } from "@apollo/client/testing"
 import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
-import CatalogContainer, { convertFiltersToGraphQL } from "./CatalogContainer"
+import CatalogContainer, { getQueryFilterString } from "./CatalogContainer"
 import { CatalogProvider } from "./CatalogContext"
 import {
   GET_BACTERIAL_STRAIN_LIST,
@@ -79,7 +79,7 @@ describe("CatalogContainer", () => {
       userEvent.selectOptions(dropdown, "Bacterial Strains")
       // wait for chip to appear in searchbox
       const chip = await screen.findByRole("button", {
-        name: "stock_type: bacterial",
+        name: "strain_type: bacterial",
       })
       expect(chip).toBeInTheDocument()
     })
@@ -94,7 +94,7 @@ describe("CatalogContainer", () => {
       userEvent.selectOptions(dropdown, "Bacterial Strains")
       // wait for chip to appear in searchbox
       const chip = await screen.findByRole("button", {
-        name: "stock_type: bacterial",
+        name: "strain_type: bacterial",
       })
       expect(chip).toBeInTheDocument()
       // find clear button
@@ -117,7 +117,7 @@ describe("CatalogContainer", () => {
       userEvent.selectOptions(dropdown, "Bacterial Strains")
       // wait for chip to appear in searchbox
       const bacterialChip = await screen.findByRole("button", {
-        name: "stock_type: bacterial",
+        name: "strain_type: bacterial",
       })
       expect(bacterialChip).toBeInTheDocument()
       // wait for data to appear
@@ -128,32 +128,33 @@ describe("CatalogContainer", () => {
       userEvent.selectOptions(updatedDropdown, "Regular Strains")
       // wait for new chip to appear
       const regChip = await screen.findByRole("button", {
-        name: "stock_type: regular",
+        name: "strain_type: regular",
       })
       expect(regChip).toBeInTheDocument()
       // verify (old) bacterial chip has been removed
       const bacterial = screen.queryByRole("button", {
-        name: "stock_type: bacterial",
+        name: "strain_type: bacterial",
       })
       expect(bacterial).not.toBeInTheDocument()
     })
   })
 })
 
-describe("convertFiltersToGraphQL function", () => {
-  it("should add strict equals for stock_type", () => {
-    expect(convertFiltersToGraphQL(["stock_type: all"])).toEqual(
-      "stock_type==all",
-    )
+describe("getQueryFilterString function", () => {
+  it("should remove strain_type", () => {
+    expect(getQueryFilterString(["strain_type: all"])).toEqual("")
   })
-  it("should add strict equals for in_stock", () => {
-    expect(convertFiltersToGraphQL(["in_stock: true"])).toEqual(
-      "in_stock==true",
-    )
+  it("should remove in_stock", () => {
+    expect(getQueryFilterString(["in_stock: true"])).toEqual("")
   })
-  it("should add substrings and AND operator", () => {
-    expect(convertFiltersToGraphQL(["stock_type: all", "label: sad"])).toEqual(
-      "stock_type==all;label~=sad",
-    )
+  it("should remove both strain_type and in_stock", () => {
+    expect(
+      getQueryFilterString(["in_stock: true", "strain_type: all"]),
+    ).toEqual("")
+  })
+  it("should include AND operator", () => {
+    expect(
+      getQueryFilterString(["strain_type: all", "label: sad", "summary: test"]),
+    ).toEqual("label~=sad;summary~=test")
   })
 })

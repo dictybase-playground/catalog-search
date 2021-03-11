@@ -13,17 +13,14 @@ import {
 } from "./graphql/query"
 import { useCatalogStore } from "./CatalogContext"
 
-// convert the active filters to a proper graphql filter string
-// i.e. ["stock_type: all", "label: sad"]
-// equals stock_type==all;label~=true
-const convertFiltersToGraphQL = (filters: string[]) => {
+// convert active filters to usable graphql filter string
+// by stripping out the stock_type and in_stock properties
+const getQueryFilterString = (filters: string[]) => {
   return filters
-    .map((item) => {
-      if (item.includes("stock_type") || item.includes("in_stock")) {
-        return item.replace(": ", "==")
-      }
-      return item.replace(": ", "~=")
+    .filter((item) => {
+      return !item.includes("strain_type") && !item.includes("in_stock")
     })
+    .map((item) => item.replace(": ", "~="))
     .join(";")
 }
 
@@ -77,10 +74,13 @@ const getGraphQLQuery = (filter: string) => {
 
 const CatalogContainer = () => {
   const {
-    state: { presetFilter, queryVariables },
+    state: { presetFilter, activeFilters, queryVariables },
   } = useCatalogStore()
   const { loading, error, data } = useQuery(getGraphQLQuery(presetFilter), {
-    variables: queryVariables,
+    variables: {
+      ...queryVariables,
+      filter: getQueryFilterString(activeFilters),
+    },
   })
 
   if (loading) {
@@ -105,5 +105,5 @@ const CatalogContainer = () => {
   )
 }
 
-export { convertFiltersToGraphQL }
+export { getQueryFilterString }
 export default CatalogContainer

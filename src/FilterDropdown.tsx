@@ -10,10 +10,10 @@ type Filters = {
 }
 
 const presetFilters = {
-  "Regular Strains": ["stock_type: regular"],
-  "GWDI Strains": ["stock_type: GWDI"],
-  "Available Regular Strains": ["stock_type: regular", "in_stock: true"],
-  "Bacterial Strains": ["stock_type: bacterial"],
+  "Regular Strains": ["strain_type: regular"],
+  "GWDI Strains": ["strain_type: GWDI"],
+  "Available Regular Strains": ["strain_type: regular", "in_stock: true"],
+  "Bacterial Strains": ["strain_type: bacterial"],
 } as Filters
 
 const useStyles = makeStyles((theme: Theme) => ({
