@@ -71,8 +71,8 @@ const GET_STRAIN_INVENTORY_LIST = gql`
 `
 
 const GET_BACTERIAL_STRAIN_LIST = gql`
-  query BacterialStrainList($cursor: Int!, $limit: Int!) {
-    listBacterialStrains(cursor: $cursor, limit: $limit) {
+  query BacterialStrainList($cursor: Int!, $limit: Int!, $filter: String!) {
+    listBacterialStrains(cursor: $cursor, limit: $limit, filter: $filter) {
       nextCursor
       totalCount
       strains {
