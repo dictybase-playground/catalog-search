@@ -8,10 +8,17 @@ import CatalogContainer, {
 import { CatalogProvider } from "./CatalogContext"
 import {
   GET_BACTERIAL_STRAIN_LIST,
+  GET_GWDI_STRAIN_LIST,
   GET_REGULAR_STRAIN_LIST,
+  GET_STRAIN_INVENTORY_LIST,
   GET_STRAIN_LIST,
 } from "./graphql/query"
-import { mockRegularStrains, mockBacterialStrains } from "./mocks/mockStrains"
+import {
+  mockRegularStrains,
+  mockBacterialStrains,
+  mockGWDIStrains,
+  mockRegularAvailableStrains,
+} from "./mocks/mockStrains"
 
 describe("CatalogContainer", () => {
   const MockComponent = ({ mocks = listMocks }: any) => {
@@ -70,6 +77,8 @@ describe("CatalogContainer", () => {
 
   const mockItem = `${mockRegularStrains.listRegularStrains.strains[0].id} - ${mockRegularStrains.listRegularStrains.strains[0].label}`
   const mockBacterialItem = `${mockBacterialStrains.listBacterialStrains.strains[0].id} - ${mockBacterialStrains.listBacterialStrains.strains[0].label}`
+  const mockGWDIItem = `${mockGWDIStrains.listGWDIStrains.strains[0].id} - ${mockGWDIStrains.listGWDIStrains.strains[0].label}`
+  const mockAvailableItem = `${mockRegularAvailableStrains.listStrainsInventory.strains[0].id} - ${mockRegularAvailableStrains.listStrainsInventory.strains[0].label}`
 
   describe("using dropdown menu", () => {
     it("should add search tag on click", async () => {
@@ -141,6 +150,81 @@ describe("CatalogContainer", () => {
       expect(bacterial).not.toBeInTheDocument()
     })
   })
+
+  describe("selecting different dropdown values", () => {
+    it("should display expected data based on dropdown value", async () => {
+      const listMocks = [
+        {
+          request: {
+            query: GET_STRAIN_LIST,
+            variables: {
+              cursor: 0,
+              limit: 10,
+              filter: "",
+            },
+          },
+          result: {
+            data: {
+              listStrains: mockRegularStrains.listRegularStrains,
+            },
+          },
+        },
+        {
+          request: {
+            query: GET_GWDI_STRAIN_LIST,
+            variables: {
+              cursor: 0,
+              limit: 10,
+              filter: "",
+            },
+          },
+          result: {
+            data: mockGWDIStrains,
+          },
+        },
+        {
+          request: {
+            query: GET_STRAIN_INVENTORY_LIST,
+            variables: {
+              cursor: 0,
+              limit: 10,
+              filter: "",
+              strain_type: "REGULAR",
+            },
+          },
+          result: {
+            data: mockRegularAvailableStrains,
+          },
+        },
+      ]
+      render(<MockComponent mocks={listMocks} />)
+      // wait for data to load...
+      const firstRow = await screen.findByText(mockItem)
+      expect(firstRow).toBeInTheDocument()
+      // select dropdown item
+      const dropdown = screen.getAllByRole("combobox")[0]
+      userEvent.selectOptions(dropdown, "GWDI Strains")
+      // wait for chip to appear in searchbox
+      const gwdiChip = await screen.findByRole("button", {
+        name: "strain_type: GWDI",
+      })
+      expect(gwdiChip).toBeInTheDocument()
+      // wait for data to appear
+      const firstGWDIRow = await screen.findByText(mockGWDIItem)
+      expect(firstGWDIRow).toBeInTheDocument()
+      // select different item
+      const updatedDropdown = screen.getAllByRole("combobox")[0]
+      userEvent.selectOptions(updatedDropdown, "Available Regular Strains")
+      // wait for new chip to appear
+      const regChip = await screen.findByRole("button", {
+        name: "strain_type: regular",
+      })
+      expect(regChip).toBeInTheDocument()
+      // wait for data to appear
+      const firstAvailRow = await screen.findByText(mockAvailableItem)
+      expect(firstAvailRow).toBeInTheDocument()
+    })
+  })
 })
 
 describe("getQueryFilterString function", () => {
@@ -193,7 +277,7 @@ describe("normalizeDataObject function", () => {
     }
     expect(normalizeDataObject(strainObj)).toEqual("bac")
   })
-  it("should return same data for unexpectd object", () => {
+  it("should return same data for unexpected object", () => {
     const strainObj = {
       foo: "bar",
     }
