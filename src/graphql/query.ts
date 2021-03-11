@@ -16,8 +16,8 @@ const GET_STRAIN_LIST = gql`
 `
 
 const GET_REGULAR_STRAIN_LIST = gql`
-  query RegularStrainList($cursor: Int!, $limit: Int!) {
-    listRegularStrains(cursor: $cursor, limit: $limit) {
+  query RegularStrainList($cursor: Int!, $limit: Int!, $filter: String!) {
+    listRegularStrains(cursor: $cursor, limit: $limit, filter: $filter) {
       nextCursor
       totalCount
       strains {
@@ -31,8 +31,8 @@ const GET_REGULAR_STRAIN_LIST = gql`
 `
 
 const GET_GWDI_STRAIN_LIST = gql`
-  query GWDIStrainList($cursor: Int!, $limit: Int!) {
-    listGWDIStrains(cursor: $cursor, limit: $limit) {
+  query GWDIStrainList($cursor: Int!, $limit: Int!, $filter: String!) {
+    listGWDIStrains(cursor: $cursor, limit: $limit, filter: $filter) {
       nextCursor
       totalCount
       strains {
@@ -46,8 +46,18 @@ const GET_GWDI_STRAIN_LIST = gql`
 `
 
 const GET_STRAIN_INVENTORY_LIST = gql`
-  query StrainInventoryList($cursor: Int!, $limit: Int!) {
-    listStrainsInventory(cursor: $cursor, limit: $limit) {
+  query StrainInventoryList(
+    $cursor: Int!
+    $limit: Int!
+    $filter: String!
+    $strain_type: String!
+  ) {
+    listStrainsInventory(
+      cursor: $cursor
+      limit: $limit
+      filter: $filter
+      strain_type: $strain_type
+    ) {
       nextCursor
       totalCount
       strains {

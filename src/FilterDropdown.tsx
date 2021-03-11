@@ -35,6 +35,7 @@ const getGraphQLQueryVariables = (presetFilter: string) => {
   const variables = {
     cursor: 0,
     limit: 10,
+    filter: "",
   }
   switch (presetFilter) {
     case "GWDI Strains":
@@ -44,13 +45,10 @@ const getGraphQLQueryVariables = (presetFilter: string) => {
     case "Available Regular Strains":
       return {
         ...variables,
-        stock_type: "REGULAR",
+        strain_type: "REGULAR",
       }
     default:
-      return {
-        ...variables,
-        filter: "",
-      }
+      return variables
   }
 }
 
