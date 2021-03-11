@@ -27,9 +27,7 @@ const convertFiltersToGraphQL = (filters: string[]) => {
     .join(";")
 }
 
-/**
- * normalizeDataObject converts the GraphQL data response into a normalized object.
- */
+// convert the GraphQL data response into a normalized object
 const normalizeDataObject = (data: any) => {
   let convertedData = data
 
@@ -52,6 +50,7 @@ const normalizeDataObject = (data: any) => {
   return convertedData
 }
 
+// get appropriate query based on dropdown selection
 const getGraphQLQuery = (filter: string) => {
   switch (filter) {
     case "Regular Strains":
@@ -69,14 +68,10 @@ const getGraphQLQuery = (filter: string) => {
 
 const CatalogContainer = () => {
   const {
-    state: { presetFilter },
+    state: { presetFilter, queryVariables },
   } = useCatalogStore()
   const { loading, error, data } = useQuery(getGraphQLQuery(presetFilter), {
-    variables: {
-      cursor: 0,
-      limit: 10,
-      // filter: convertFiltersToGraphQL(activeFilters),
-    },
+    variables: queryVariables,
   })
 
   if (loading) {

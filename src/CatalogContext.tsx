@@ -4,6 +4,7 @@ import {
   CatalogActionType,
   Action,
   CatalogContextProps,
+  QueryVariables,
 } from "./types/context"
 
 const initialState = {
@@ -11,6 +12,12 @@ const initialState = {
   presetFilter: "Filters",
   /** List of active filters shown in search box (as tags) */
   activeFilters: [],
+  /** GraphQL query variables */
+  queryVariables: {
+    cursor: 0,
+    limit: 10,
+    filter: "",
+  },
 }
 
 const catalogReducer = (state: CatalogState, action: Action) => {
@@ -24,6 +31,11 @@ const catalogReducer = (state: CatalogState, action: Action) => {
       return {
         ...state,
         activeFilters: action.payload,
+      }
+    case CatalogActionType.SET_QUERY_VARIABLES:
+      return {
+        ...state,
+        queryVariables: action.payload,
       }
     default:
       return state
@@ -60,10 +72,17 @@ const useCatalogStore = () => {
       payload: activeFilters,
     })
 
+  const setQueryVariables = (variables: QueryVariables) =>
+    dispatch({
+      type: CatalogActionType.SET_QUERY_VARIABLES,
+      payload: variables,
+    })
+
   return {
     state,
     setPresetFilter,
     setActiveFilters,
+    setQueryVariables,
   }
 }
 
