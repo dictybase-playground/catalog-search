@@ -97,7 +97,9 @@ const SearchBox = () => {
             autoFocus
             variant="outlined"
             label="Search"
-            placeholder="Search strain catalog..."
+            placeholder={
+              activeFilters.length < 1 ? "Search strain catalog..." : ""
+            }
             classes={{
               root: classes.root,
             }}
