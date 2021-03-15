@@ -6,13 +6,20 @@ import {
   GET_BACTERIAL_STRAIN_LIST,
 } from "../graphql/query"
 
+// remove all values that cannot be added to the GraphQL filter string
+const isFilterable = (value: string) => {
+  const notType = value.includes("strain_type")
+  const notInv = value.includes("in_stock")
+  const keyWithVal = value.includes(":")
+
+  return keyWithVal && notType && notInv
+}
+
 // convert active filters to usable graphql filter string
 // by stripping out the stock_type and in_stock properties
 const getQueryFilterString = (filters: string[]) => {
   return filters
-    .filter((item) => {
-      return !item.includes("strain_type") && !item.includes("in_stock")
-    })
+    .filter(isFilterable)
     .map((item) => item.replace(": ", "~="))
     .join(";")
 }
