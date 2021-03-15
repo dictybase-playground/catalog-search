@@ -19,6 +19,32 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }))
 
+const handleChipDisplay = (
+  value: string[],
+  setActiveFilters: (arg0: string[]) => void,
+) => {
+  const lastIndex = value.length - 1
+  const secondToLastIndex = value.length - 2
+  const lastVal = value[lastIndex]
+  const secondToLastVal = value[secondToLastIndex]
+
+  // if the last value is from the list of options then that means the user
+  // has not entered a search value yet; no further action is necessary
+  if (options.includes(lastVal)) {
+    setActiveFilters(value)
+    return
+  }
+
+  // if there is a last value and it
+  if (lastVal && lastVal.includes(":")) {
+    setActiveFilters(value)
+  } else {
+    const newChip = `${secondToLastVal}:${lastVal}`
+    const updatedTags = [...value.slice(0, secondToLastIndex), newChip]
+    setActiveFilters(updatedTags)
+  }
+}
+
 const SearchBox = () => {
   const classes = useStyles()
   const {
@@ -28,11 +54,11 @@ const SearchBox = () => {
   } = useCatalogStore()
 
   const handleChange = (event: React.ChangeEvent<{}>, value: string[]) => {
-    // if (value.includes("Descriptor")) {}
-    setActiveFilters(value)
+    handleChipDisplay(value, setActiveFilters)
     // go back to default filter if no tags listed
     if (value.length === 0) {
       setPresetFilter("Filters")
+      setActiveFilters(value)
     }
   }
 
