@@ -28,6 +28,7 @@ const SearchBox = () => {
   } = useCatalogStore()
 
   const handleChange = (event: React.ChangeEvent<{}>, value: string[]) => {
+    // if (value.includes("Descriptor")) {}
     setActiveFilters(value)
     // go back to default filter if no tags listed
     if (value.length === 0) {
@@ -47,6 +48,10 @@ const SearchBox = () => {
         value={activeFilters}
         renderTags={(value: string[], getTagProps) => {
           return value.map((option: string, index: number) => {
+            const lastVal = value[value.length - 1]
+            if (lastVal === option && options.includes(option)) {
+              return <span key={index}>{option}:</span>
+            }
             return (
               <Chip
                 variant="outlined"
