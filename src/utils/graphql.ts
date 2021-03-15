@@ -8,8 +8,8 @@ import {
 
 // remove all values that cannot be added to the GraphQL filter string
 const isFilterable = (value: string) => {
-  const notType = value.includes("strain_type")
-  const notInv = value.includes("in_stock")
+  const notType = !value.includes("strain_type")
+  const notInv = !value.includes("in_stock")
   const keyWithVal = value.includes(":")
 
   return keyWithVal && notType && notInv
