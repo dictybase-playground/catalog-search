@@ -42,7 +42,7 @@ const handleTagDisplay = (
   if (lastTagIsKey || lastTagIsKeyVal) {
     setActiveFilters(tags)
   } else {
-    const newTag = `${secondToLastTag}:${lastTag}`
+    const newTag = `${secondToLastTag}: ${lastTag}`
     const updatedTags = [...tags.slice(0, secondToLastIndex), newTag]
     setActiveFilters(updatedTags)
   }
