@@ -19,28 +19,31 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }))
 
-const handleChipDisplay = (
-  value: string[],
+const handleTagDisplay = (
+  tags: string[],
   setActiveFilters: (arg0: string[]) => void,
 ) => {
-  const lastIndex = value.length - 1
-  const secondToLastIndex = value.length - 2
-  const lastVal = value[lastIndex]
-  const secondToLastVal = value[secondToLastIndex]
+  const lastIndex = tags.length - 1
+  const secondToLastIndex = tags.length - 2
+  const lastTag = tags[lastIndex]
+  const secondToLastTag = tags[secondToLastIndex]
 
-  // if the last value is from the list of options then that means the user
-  // has not entered a search value yet; no further action is necessary
-  if (options.includes(lastVal)) {
-    setActiveFilters(value)
-    return
-  }
+  const lastTagIsKeyVal = lastTag && lastTag.includes(":")
+  const lastTagIsKey = options.includes(lastTag)
 
-  // if there is a last value and it
-  if (lastVal && lastVal.includes(":")) {
-    setActiveFilters(value)
+  // If the last value is from the list of options then that means the user
+  // has not entered a search value yet. No further action is necessary.
+  //
+  // If the last tag is from the list of options (i.e. Descriptor, ID, etc.) or
+  // it is a combined key:val (i.e. in_stock:true) then the active filters state
+  // is updated as normal.
+  // Else, the last tag is just a value and needs to be appended to the previous
+  // key (therefore creating one tag instead of two).
+  if (lastTagIsKey || lastTagIsKeyVal) {
+    setActiveFilters(tags)
   } else {
-    const newChip = `${secondToLastVal}:${lastVal}`
-    const updatedTags = [...value.slice(0, secondToLastIndex), newChip]
+    const newTag = `${secondToLastTag}:${lastTag}`
+    const updatedTags = [...tags.slice(0, secondToLastIndex), newTag]
     setActiveFilters(updatedTags)
   }
 }
@@ -54,7 +57,7 @@ const SearchBox = () => {
   } = useCatalogStore()
 
   const handleChange = (event: React.ChangeEvent<{}>, value: string[]) => {
-    handleChipDisplay(value, setActiveFilters)
+    handleTagDisplay(value, setActiveFilters)
     // go back to default filter if no tags listed
     if (value.length === 0) {
       setPresetFilter("Filters")
@@ -91,6 +94,7 @@ const SearchBox = () => {
         renderInput={(params) => (
           <TextField
             {...params}
+            autoFocus
             variant="outlined"
             label="Search"
             placeholder="Search strain catalog..."
