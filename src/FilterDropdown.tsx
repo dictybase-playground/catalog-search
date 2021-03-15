@@ -18,7 +18,7 @@ const presetFilters = {
 
 const useStyles = makeStyles((theme: Theme) => ({
   filter: {
-    minWidth: "200px",
+    minWidth: "220px",
     display: "flex",
     justifyContent: "flex-end",
     alignItems: "center",
