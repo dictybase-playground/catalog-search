@@ -1,19 +1,23 @@
 import React from "react"
 import Chip from "@material-ui/core/Chip"
 import Autocomplete from "@material-ui/lab/Autocomplete"
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles"
+import { makeStyles, Theme } from "@material-ui/core/styles"
 import TextField from "@material-ui/core/TextField"
 import { useCatalogStore } from "./CatalogContext"
 
 const options = ["Descriptor", "Summary", "ID"]
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      width: "100%",
+const useStyles = makeStyles((theme: Theme) => ({
+  container: {
+    width: "100%",
+  },
+  root: {
+    "& .MuiOutlinedInput-root": {
+      borderTopLeftRadius: "0px",
+      borderBottomLeftRadius: "0px",
     },
-  }),
-)
+  },
+}))
 
 const SearchBox = () => {
   const classes = useStyles()
@@ -32,7 +36,7 @@ const SearchBox = () => {
   }
 
   return (
-    <span className={classes.root}>
+    <span className={classes.container}>
       <Autocomplete
         multiple
         id="strain-catalog"
@@ -59,6 +63,9 @@ const SearchBox = () => {
             variant="outlined"
             label="Search"
             placeholder="Search strain catalog..."
+            classes={{
+              root: classes.root,
+            }}
           />
         )}
       />
