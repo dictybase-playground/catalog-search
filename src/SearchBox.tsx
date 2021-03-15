@@ -65,12 +65,21 @@ const SearchBox = () => {
     }
   }
 
+  const handleDisplayOptions = () => {
+    // if the last filter is in the list of options then only return empty array
+    if (options.includes(activeFilters[activeFilters.length - 1])) {
+      return []
+    }
+    // otherwise return the normal autocomplete options
+    return options
+  }
+
   return (
     <span className={classes.container}>
       <Autocomplete
         multiple
         id="strain-catalog"
-        options={options}
+        options={handleDisplayOptions()}
         freeSolo
         filterSelectedOptions
         onChange={handleChange}
