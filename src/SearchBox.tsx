@@ -119,4 +119,5 @@ const SearchBox = () => {
   )
 }
 
+export { handleTagDisplay }
 export default SearchBox
