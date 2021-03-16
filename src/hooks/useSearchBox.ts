@@ -64,13 +64,12 @@ const handleQueryVariables = (
 /**
  * useSearchBox contains the logic used for handling any changes inside the
  * autocomplete searchbox. handleChange is used to update the global state with
- * necessary changes, and handleDisplayOptions controls the display of the
- * autocomplete dropdown options.
+ * necessary changes.
  */
 
 const useSearchBox = () => {
   const {
-    state: { activeFilters, queryVariables },
+    state: { queryVariables },
     setPresetFilter,
     setActiveFilters,
     setQueryVariables,
@@ -90,23 +89,8 @@ const useSearchBox = () => {
     }
   }
 
-  const handleDisplayOptions = () => {
-    const lastVal = activeFilters[activeFilters.length - 1]
-    // if the last filter is in the list of options then only return empty array
-    // unless it is a Currently Available tag
-    if (
-      lastVal !== "Currently Available" &&
-      autocompleteOptions.includes(lastVal)
-    ) {
-      return []
-    }
-    // otherwise return the normal autocomplete options
-    return autocompleteOptions
-  }
-
   return {
     handleChange,
-    handleDisplayOptions,
   }
 }
 
