@@ -4,6 +4,7 @@ import { makeStyles, Theme } from "@material-ui/core/styles"
 import TextField from "@material-ui/core/TextField"
 import TagsDisplay from "./TagsDisplay"
 import { useCatalogStore } from "./CatalogContext"
+import { QueryVariables } from "./types/context"
 
 const options = ["Descriptor", "Summary", "ID", "Currently Available"]
 
@@ -48,16 +49,52 @@ const handleTagDisplay = (
   }
 }
 
+const handleQueryVariables = (
+  value: string[],
+  queryVariables: QueryVariables,
+  setQueryVariables: (arg0: QueryVariables) => void,
+) => {
+  const strainType = value
+    .find((item) => item.includes("Type"))
+    ?.replace("Type: ", "")
+
+  switch (strainType) {
+    case "Regular":
+      setQueryVariables({
+        ...queryVariables,
+        stock_type: "REGULAR",
+      })
+      break
+    case "GWDI":
+      setQueryVariables({
+        ...queryVariables,
+        stock_type: "GWDI",
+      })
+      break
+    default:
+      setQueryVariables({
+        ...queryVariables,
+        stock_type: "ALL",
+      })
+  }
+}
+
 const SearchBox = () => {
   const classes = useStyles()
   const {
-    state: { activeFilters },
+    state: { activeFilters, queryVariables },
     setPresetFilter,
     setActiveFilters,
+    setQueryVariables,
   } = useCatalogStore()
 
   const handleChange = (event: React.ChangeEvent<{}>, value: string[]) => {
     handleTagDisplay(value, setActiveFilters)
+    // if the list of values includes availability then we need to add the
+    // strain_type argument to the query
+    if (value.includes("Currently Available")) {
+      handleQueryVariables(value, queryVariables, setQueryVariables)
+    }
     // go back to default filter if no tags listed
     if (value.length === 0) {
       setPresetFilter("Filters")
