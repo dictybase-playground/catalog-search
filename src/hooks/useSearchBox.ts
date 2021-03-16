@@ -1,5 +1,4 @@
 import { useCatalogStore } from "../CatalogContext"
-import { QueryVariables } from "../types/context"
 import { autocompleteOptions } from "../constants/autocompleteOptions"
 
 const handleTagDisplay = (
@@ -31,36 +30,6 @@ const handleTagDisplay = (
   }
 }
 
-const handleQueryVariables = (
-  value: string[],
-  queryVariables: QueryVariables,
-  setQueryVariables: (arg0: QueryVariables) => void,
-) => {
-  const strainType = value
-    .find((item) => item.includes("Type"))
-    ?.replace("Type: ", "")
-
-  switch (strainType) {
-    case "Regular":
-      setQueryVariables({
-        ...queryVariables,
-        stock_type: "REGULAR",
-      })
-      break
-    case "GWDI":
-      setQueryVariables({
-        ...queryVariables,
-        stock_type: "GWDI",
-      })
-      break
-    default:
-      setQueryVariables({
-        ...queryVariables,
-        stock_type: "ALL",
-      })
-  }
-}
-
 /**
  * useSearchBox contains the logic used for handling any changes inside the
  * autocomplete searchbox. handleChange is used to update the global state with
@@ -68,20 +37,10 @@ const handleQueryVariables = (
  */
 
 const useSearchBox = () => {
-  const {
-    state: { queryVariables },
-    setPresetFilter,
-    setActiveFilters,
-    setQueryVariables,
-  } = useCatalogStore()
+  const { setPresetFilter, setActiveFilters } = useCatalogStore()
 
   const handleChange = (event: React.ChangeEvent<{}>, value: string[]) => {
     handleTagDisplay(value, setActiveFilters)
-    // if the list of values includes availability then we need to add the
-    // strain_type argument to the query
-    if (value.includes("Currently Available")) {
-      handleQueryVariables(value, queryVariables, setQueryVariables)
-    }
     // go back to default filter if no tags listed
     if (value.length === 0) {
       setPresetFilter("Filters")

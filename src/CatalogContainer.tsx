@@ -9,6 +9,7 @@ import {
   getQueryFilterString,
   normalizeDataObject,
   getGraphQLQuery,
+  getQueryVariables,
 } from "./utils/graphql"
 
 const CatalogContainer = () => {
@@ -16,10 +17,7 @@ const CatalogContainer = () => {
     state: { activeFilters, queryVariables },
   } = useCatalogStore()
   const { loading, error, data } = useQuery(getGraphQLQuery(activeFilters), {
-    variables: {
-      ...queryVariables,
-      filter: getQueryFilterString(activeFilters),
-    },
+    variables: getQueryVariables(activeFilters, queryVariables),
   })
 
   if (loading) {
