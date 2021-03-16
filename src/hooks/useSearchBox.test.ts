@@ -1,4 +1,4 @@
-import { handleTagDisplay } from "./SearchBox"
+import { handleTagDisplay } from "./useSearchBox"
 
 describe("handleTagDisplay function", () => {
   it("should combine keys and values with colon", () => {
