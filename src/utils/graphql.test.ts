@@ -1,20 +1,20 @@
 import { getQueryFilterString, normalizeDataObject } from "./graphql"
 
 describe("getQueryFilterString function", () => {
-  it("should remove strain_type", () => {
-    expect(getQueryFilterString(["strain_type: all"])).toEqual("")
+  it("should remove type", () => {
+    expect(getQueryFilterString(["Type: all"])).toEqual("")
   })
-  it("should remove in_stock", () => {
-    expect(getQueryFilterString(["in_stock: true"])).toEqual("")
+  it("should remove availability", () => {
+    expect(getQueryFilterString(["Currently Available"])).toEqual("")
   })
-  it("should remove both strain_type and in_stock", () => {
-    expect(
-      getQueryFilterString(["in_stock: true", "strain_type: all"]),
-    ).toEqual("")
+  it("should remove both type and availability", () => {
+    expect(getQueryFilterString(["Currently Available", "Type: all"])).toEqual(
+      "",
+    )
   })
   it("should include AND operator", () => {
     expect(
-      getQueryFilterString(["strain_type: all", "label: sad", "summary: test"]),
+      getQueryFilterString(["Type: all", "label: sad", "summary: test"]),
     ).toEqual("label~=sad;summary~=test")
   })
 })

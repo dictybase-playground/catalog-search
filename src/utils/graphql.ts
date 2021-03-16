@@ -8,8 +8,8 @@ import {
 
 // remove all values that cannot be added to the GraphQL filter string
 const isFilterable = (value: string) => {
-  const notType = !value.includes("strain_type")
-  const notInv = !value.includes("in_stock")
+  const notType = !value.includes("Type")
+  const notInv = value !== "Currently Available"
   const keyWithVal = value.includes(":")
 
   return keyWithVal && notType && notInv
@@ -58,20 +58,20 @@ const normalizeDataObject = (data: any) => {
 
 // get appropriate query based on dropdown selection
 const getGraphQLQuery = (filters: string[]) => {
-  if (filters.includes("in_stock: true")) {
+  if (filters.includes("Currently Available")) {
     return GET_STRAIN_INVENTORY_LIST
   }
 
   const strainType = filters
-    .find((item) => item.includes("strain_type"))
-    ?.replace("strain_type: ", "")
+    .find((item) => item.includes("Type"))
+    ?.replace("Type: ", "")
 
   switch (strainType) {
-    case "regular":
+    case "Regular":
       return GET_REGULAR_STRAIN_LIST
     case "GWDI":
       return GET_GWDI_STRAIN_LIST
-    case "bacterial":
+    case "Bacterial":
       return GET_BACTERIAL_STRAIN_LIST
     default:
       return GET_STRAIN_LIST

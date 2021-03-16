@@ -88,7 +88,7 @@ describe("CatalogContainer", () => {
       userEvent.selectOptions(dropdown, "Bacterial Strains")
       // wait for chip to appear in searchbox
       const chip = await screen.findByRole("button", {
-        name: "strain_type: bacterial",
+        name: "Type: Bacterial",
       })
       expect(chip).toBeInTheDocument()
     })
@@ -103,7 +103,7 @@ describe("CatalogContainer", () => {
       userEvent.selectOptions(dropdown, "Bacterial Strains")
       // wait for chip to appear in searchbox
       const chip = await screen.findByRole("button", {
-        name: "strain_type: bacterial",
+        name: "Type: Bacterial",
       })
       expect(chip).toBeInTheDocument()
       // find clear button
@@ -126,7 +126,7 @@ describe("CatalogContainer", () => {
       userEvent.selectOptions(dropdown, "Bacterial Strains")
       // wait for chip to appear in searchbox
       const bacterialChip = await screen.findByRole("button", {
-        name: "strain_type: bacterial",
+        name: "Type: Bacterial",
       })
       expect(bacterialChip).toBeInTheDocument()
       // wait for data to appear
@@ -137,12 +137,12 @@ describe("CatalogContainer", () => {
       userEvent.selectOptions(updatedDropdown, "Regular Strains")
       // wait for new chip to appear
       const regChip = await screen.findByRole("button", {
-        name: "strain_type: regular",
+        name: "Type: Regular",
       })
       expect(regChip).toBeInTheDocument()
       // verify (old) bacterial chip has been removed
       const bacterial = screen.queryByRole("button", {
-        name: "strain_type: bacterial",
+        name: "Type: Bacterial",
       })
       expect(bacterial).not.toBeInTheDocument()
     })
@@ -203,7 +203,7 @@ describe("CatalogContainer", () => {
       userEvent.selectOptions(dropdown, "GWDI Strains")
       // wait for chip to appear in searchbox
       const gwdiChip = await screen.findByRole("button", {
-        name: "strain_type: GWDI",
+        name: "Type: GWDI",
       })
       expect(gwdiChip).toBeInTheDocument()
       // wait for data to appear
@@ -214,7 +214,7 @@ describe("CatalogContainer", () => {
       userEvent.selectOptions(updatedDropdown, "Available Regular Strains")
       // wait for new chip to appear
       const regChip = await screen.findByRole("button", {
-        name: "strain_type: regular",
+        name: "Type: Regular",
       })
       expect(regChip).toBeInTheDocument()
       // wait for data to appear
