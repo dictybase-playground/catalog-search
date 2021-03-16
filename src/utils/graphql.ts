@@ -21,7 +21,17 @@ const isFilterable = (value: string) => {
 const getQueryFilterString = (filters: string[]) => {
   return filters
     .filter(isFilterable)
-    .map((item) => item.replace(": ", "~="))
+    .map((item) => {
+      let convertedItem = item
+      if (convertedItem.includes("Descriptor")) {
+        convertedItem = convertedItem.replace("Descriptor", "label")
+      }
+      // use lowercase for the filter property and replace the colon
+      const firstChar = item.charAt(0)
+      return convertedItem
+        .replace(firstChar, firstChar.toLowerCase())
+        .replace(": ", "~=")
+    })
     .join(";")
 }
 
