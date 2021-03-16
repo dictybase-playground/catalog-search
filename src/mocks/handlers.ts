@@ -21,9 +21,42 @@ export const handlers = [
     return res(ctx.data(mockBacterialStrains))
   }),
   graphql.query("StrainInventoryList", (req, res, ctx) => {
-    return res(ctx.data(mockRegularAvailableStrains))
+    const { strain_type } = req.variables
+
+    switch (strain_type) {
+      case "REGULAR":
+        return res(ctx.data(mockRegularAvailableStrains))
+      case "GWDI":
+        return res(
+          ctx.data({
+            listStrainsInventory: mockGWDIStrains.listGWDIStrains,
+          }),
+        )
+      default:
+        return res(
+          ctx.data({
+            listStrainsInventory: mockRegularStrains.listRegularStrains,
+          }),
+        )
+    }
   }),
   graphql.query("GWDIStrainList", (req, res, ctx) => {
+    const { filter } = req.variables
+    const splitFilter = filter.split(";")
+
+    if (splitFilter.length === 1 && filter.includes("label")) {
+      return res(
+        ctx.data({
+          listGWDIStrains: {
+            ...mockGWDIStrains.listGWDIStrains,
+            strains: mockGWDIStrains.listGWDIStrains.strains.filter((item) =>
+              item.label.includes(filter.split("=")[1]),
+            ),
+          },
+        }),
+      )
+    }
+
     return res(ctx.data(mockGWDIStrains))
   }),
 ]
