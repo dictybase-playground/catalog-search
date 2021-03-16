@@ -5,6 +5,7 @@ import TextField from "@material-ui/core/TextField"
 import TagsDisplay from "./TagsDisplay"
 import { useCatalogStore } from "./CatalogContext"
 import useSearchBox from "./hooks/useSearchBox"
+import { autocompleteOptions } from "./constants/autocompleteOptions"
 
 const useStyles = makeStyles((theme: Theme) => ({
   container: {
@@ -18,19 +19,33 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }))
 
+const handleDisplayOptions = (activeFilters: string[]) => {
+  const lastVal = activeFilters[activeFilters.length - 1]
+  // if the last filter is in the list of options then only return empty array
+  // unless it is a Currently Available tag
+  if (
+    lastVal !== "Currently Available" &&
+    autocompleteOptions.includes(lastVal)
+  ) {
+    return []
+  }
+  // otherwise return the normal autocomplete options
+  return autocompleteOptions
+}
+
 const SearchBox = () => {
   const classes = useStyles()
   const {
     state: { activeFilters },
   } = useCatalogStore()
-  const { handleChange, handleDisplayOptions } = useSearchBox()
+  const { handleChange } = useSearchBox()
 
   return (
     <span className={classes.container}>
       <Autocomplete
         multiple
         id="strain-catalog"
-        options={handleDisplayOptions()}
+        options={handleDisplayOptions(activeFilters)}
         freeSolo
         filterSelectedOptions
         onChange={handleChange}
