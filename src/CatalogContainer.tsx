@@ -17,9 +17,9 @@ import {
 
 const CatalogContainer = () => {
   const {
-    state: { presetFilter, activeFilters, queryVariables },
+    state: { activeFilters, queryVariables },
   } = useCatalogStore()
-  const { loading, error, data } = useQuery(getGraphQLQuery(presetFilter), {
+  const { loading, error, data } = useQuery(getGraphQLQuery(activeFilters), {
     variables: {
       ...queryVariables,
       filter: getQueryFilterString(activeFilters),
