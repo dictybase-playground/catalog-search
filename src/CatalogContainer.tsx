@@ -11,10 +11,6 @@ import {
   getGraphQLQuery,
 } from "./utils/graphql"
 
-// TODO: get query based on the active filters, not just dropdowns
-// i.e. if filters include in_stock: true, then we need to change filter to
-// listStrainsInventory
-
 const CatalogContainer = () => {
   const {
     state: { activeFilters, queryVariables },

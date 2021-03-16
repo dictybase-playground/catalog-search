@@ -5,7 +5,7 @@ import { makeStyles, Theme } from "@material-ui/core/styles"
 import TextField from "@material-ui/core/TextField"
 import { useCatalogStore } from "./CatalogContext"
 
-const options = ["Descriptor", "Summary", "ID"]
+const options = ["Descriptor", "Summary", "ID", "Currently Available"]
 
 const useStyles = makeStyles((theme: Theme) => ({
   container: {
@@ -66,8 +66,10 @@ const SearchBox = () => {
   }
 
   const handleDisplayOptions = () => {
+    const lastVal = activeFilters[activeFilters.length - 1]
     // if the last filter is in the list of options then only return empty array
-    if (options.includes(activeFilters[activeFilters.length - 1])) {
+    // unless it is a Currently Available tag
+    if (lastVal !== "Currently Available" && options.includes(lastVal)) {
       return []
     }
     // otherwise return the normal autocomplete options
@@ -87,7 +89,9 @@ const SearchBox = () => {
         renderTags={(value: string[], getTagProps) => {
           return value.map((option: string, index: number) => {
             const lastVal = value[value.length - 1]
-            if (lastVal === option && options.includes(option)) {
+            const lastValIsInOptionsList =
+              lastVal === option && options.includes(option)
+            if (lastValIsInOptionsList && lastVal !== "Currently Available") {
               return <span key={index}>{option}:</span>
             }
             return (
