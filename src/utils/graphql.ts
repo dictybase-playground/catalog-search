@@ -5,6 +5,7 @@ import {
   GET_STRAIN_INVENTORY_LIST,
   GET_BACTERIAL_STRAIN_LIST,
 } from "../graphql/query"
+import { QueryVariables } from "../types/context"
 
 // remove all values that cannot be added to the GraphQL filter string
 const isFilterable = (value: string) => {
@@ -22,6 +23,43 @@ const getQueryFilterString = (filters: string[]) => {
     .filter(isFilterable)
     .map((item) => item.replace(": ", "~="))
     .join(";")
+}
+
+const getQueryVariables = (
+  activeFilters: string[],
+  queryVariables: QueryVariables,
+) => {
+  const strainType = activeFilters
+    .find((item) => item.includes("Type"))
+    ?.replace("Type: ", "")
+
+  const queryFilter = getQueryFilterString(activeFilters)
+  const updatedVariables = {
+    ...queryVariables,
+    filter: queryFilter,
+  }
+
+  if (!activeFilters.includes("Currently Available")) {
+    return updatedVariables
+  }
+
+  switch (strainType) {
+    case "Regular":
+      return {
+        ...updatedVariables,
+        strain_type: "REGULAR",
+      }
+    case "GWDI":
+      return {
+        ...updatedVariables,
+        strain_type: "GWDI",
+      }
+    default:
+      return {
+        ...updatedVariables,
+        strain_type: "ALL",
+      }
+  }
 }
 
 // convert the GraphQL data response into a normalized object
@@ -78,4 +116,9 @@ const getGraphQLQuery = (filters: string[]) => {
   }
 }
 
-export { getQueryFilterString, normalizeDataObject, getGraphQLQuery }
+export {
+  getQueryFilterString,
+  normalizeDataObject,
+  getGraphQLQuery,
+  getQueryVariables,
+}
