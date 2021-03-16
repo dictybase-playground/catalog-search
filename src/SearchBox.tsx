@@ -1,8 +1,8 @@
 import React from "react"
-import Chip from "@material-ui/core/Chip"
 import Autocomplete from "@material-ui/lab/Autocomplete"
 import { makeStyles, Theme } from "@material-ui/core/styles"
 import TextField from "@material-ui/core/TextField"
+import TagsDisplay from "./TagsDisplay"
 import { useCatalogStore } from "./CatalogContext"
 
 const options = ["Descriptor", "Summary", "ID", "Currently Available"]
@@ -88,18 +88,14 @@ const SearchBox = () => {
         value={activeFilters}
         renderTags={(value: string[], getTagProps) => {
           return value.map((option: string, index: number) => {
-            const lastVal = value[value.length - 1]
-            const lastValIsInOptionsList =
-              lastVal === option && options.includes(option)
-            if (lastValIsInOptionsList && lastVal !== "Currently Available") {
-              return <span key={index}>{option}:</span>
-            }
             return (
-              <Chip
-                variant="outlined"
-                color="default"
-                label={option}
-                {...getTagProps({ index })}
+              <TagsDisplay
+                activeFilters={value}
+                autocompleteOptions={options}
+                getTagProps={getTagProps}
+                currentOption={option}
+                currentIndex={index}
+                key={index}
               />
             )
           })
