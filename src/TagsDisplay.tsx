@@ -1,12 +1,11 @@
 import React from "react"
 import Chip from "@material-ui/core/Chip"
 import { AutocompleteGetTagProps } from "@material-ui/lab/Autocomplete"
+import { autocompleteOptions } from "./constants/autocompleteOptions"
 
 type Props = {
   /** List of currently active filters in searchbox */
   activeFilters: string[]
-  /** List of options displayed in autocomplete dropdown */
-  autocompleteOptions: string[]
   /** MUI Getter for tag props */
   getTagProps: AutocompleteGetTagProps
   /** Current tag to display */
@@ -22,7 +21,6 @@ type Props = {
 
 const TagsDisplay = ({
   activeFilters,
-  autocompleteOptions,
   getTagProps,
   currentOption,
   currentIndex,
