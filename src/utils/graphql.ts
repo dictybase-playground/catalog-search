@@ -7,6 +7,11 @@ import {
 } from "../graphql/query"
 import { QueryVariables } from "../types/context"
 
+// get the strain type from a list of filters
+const getStrainType = (filters: string[]) => {
+  return filters.find((item) => item.includes("Type"))?.replace("Type: ", "")
+}
+
 // remove all values that cannot be added to the GraphQL filter string
 const isFilterable = (value: string) => {
   const notType = !value.includes("Type")
@@ -38,10 +43,7 @@ const getQueryVariables = (
   activeFilters: string[],
   queryVariables: QueryVariables,
 ) => {
-  const strainType = activeFilters
-    .find((item) => item.includes("Type"))
-    ?.replace("Type: ", "")
-
+  const strainType = getStrainType(activeFilters)
   const queryFilter = getQueryFilterString(activeFilters)
   const updatedVariables = {
     ...queryVariables,
@@ -109,9 +111,7 @@ const getGraphQLQuery = (filters: string[]) => {
     return GET_STRAIN_INVENTORY_LIST
   }
 
-  const strainType = filters
-    .find((item) => item.includes("Type"))
-    ?.replace("Type: ", "")
+  const strainType = getStrainType(filters)
 
   switch (strainType) {
     case "Regular":
