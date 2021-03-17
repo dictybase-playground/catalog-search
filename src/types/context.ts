@@ -2,7 +2,7 @@ type QueryVariables = {
   cursor: number
   limit: number
   filter?: string
-  stock_type?: string
+  strain_type?: string
 }
 
 type CatalogState = {

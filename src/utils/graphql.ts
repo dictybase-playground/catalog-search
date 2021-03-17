@@ -17,7 +17,6 @@ const isFilterable = (value: string) => {
 }
 
 // convert active filters to usable graphql filter string
-// by stripping out the stock_type and in_stock properties
 const getQueryFilterString = (filters: string[]) => {
   return filters
     .filter(isFilterable)
