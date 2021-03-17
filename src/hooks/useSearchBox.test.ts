@@ -9,7 +9,7 @@ describe("handleTagDisplay function", () => {
   })
 
   it("should not modify last value", () => {
-    const tags = ["Type: GWDI", "Descriptor"]
+    const tags = ["Stock Type: GWDI", "Descriptor"]
     const mockFn = jest.fn()
     handleTagDisplay(tags, mockFn)
     expect(mockFn).toHaveBeenCalledWith(tags)

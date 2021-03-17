@@ -9,36 +9,41 @@ import { QueryVariables } from "../types/context"
 
 // get the strain type from a list of filters
 const getStrainType = (filters: string[]) => {
-  return filters.find((item) => item.includes("Type"))?.replace("Type: ", "")
+  return filters
+    .find((item) => item.includes("Stock Type"))
+    ?.replace("Stock Type: ", "")
 }
 
 // remove all values that cannot be added to the GraphQL filter string
-const isFilterable = (value: string) => {
-  const notType = !value.includes("Type")
+const usableGraphQLFilters = (value: string) => {
+  const notType = !value.includes("Stock Type")
   const notInv = value !== "Currently Available"
   const keyWithVal = value.includes(":")
-
+  // only return key:val pairs that do not include type and availability
   return keyWithVal && notType && notInv
 }
 
 // convert active filters to usable graphql filter string
 const getQueryFilterString = (filters: string[]) => {
   return filters
-    .filter(isFilterable)
+    .filter(usableGraphQLFilters)
     .map((item) => {
       let convertedItem = item
+      // descriptor needs to be changed to label to match backend
       if (convertedItem.includes("Descriptor")) {
         convertedItem = convertedItem.replace("Descriptor", "label")
       }
       // use lowercase for the filter property and replace the colon
-      const firstChar = item.charAt(0)
+      // get first two chars so ID is converted to id
+      const firstChars = item.substring(0, 2)
       return convertedItem
-        .replace(firstChar, firstChar.toLowerCase())
+        .replace(firstChars, firstChars.toLowerCase())
         .replace(": ", "~=")
     })
-    .join(";")
+    .join(";") // join them with AND operator
 }
 
+// update query variables based on active filters
 const getQueryVariables = (
   activeFilters: string[],
   queryVariables: QueryVariables,
@@ -50,6 +55,7 @@ const getQueryVariables = (
     filter: queryFilter,
   }
 
+  // if inventory query, don't include the strain_type variable
   if (!activeFilters.includes("Currently Available")) {
     return updatedVariables
   }

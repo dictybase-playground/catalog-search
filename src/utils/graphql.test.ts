@@ -2,19 +2,19 @@ import { getQueryFilterString, normalizeDataObject } from "./graphql"
 
 describe("getQueryFilterString function", () => {
   it("should remove type", () => {
-    expect(getQueryFilterString(["Type: all"])).toEqual("")
+    expect(getQueryFilterString(["Stock Type: all"])).toEqual("")
   })
   it("should remove availability", () => {
     expect(getQueryFilterString(["Currently Available"])).toEqual("")
   })
   it("should remove both type and availability", () => {
-    expect(getQueryFilterString(["Currently Available", "Type: all"])).toEqual(
-      "",
-    )
+    expect(
+      getQueryFilterString(["Currently Available", "Stock Type: all"]),
+    ).toEqual("")
   })
   it("should include AND operator", () => {
     expect(
-      getQueryFilterString(["Type: all", "label: sad", "summary: test"]),
+      getQueryFilterString(["Stock Type: all", "label: sad", "summary: test"]),
     ).toEqual("label~=sad;summary~=test")
   })
 })
