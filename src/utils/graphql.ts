@@ -13,29 +13,12 @@ const getQueryVariables = (
   queryVariables: QueryVariables,
 ) => {
   const strainType = getStrainType(activeFilters)
-  const updatedVariables = {
+
+  return {
     ...queryVariables,
     filter: {
       strain_type: strainType?.toUpperCase() || "ALL",
     },
-  }
-
-  switch (strainType) {
-    case "Regular":
-      return {
-        ...updatedVariables,
-        strain_type: "REGULAR",
-      }
-    case "GWDI":
-      return {
-        ...updatedVariables,
-        strain_type: "GWDI",
-      }
-    default:
-      return {
-        ...updatedVariables,
-        strain_type: "ALL",
-      }
   }
 }
 
