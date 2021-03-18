@@ -19,7 +19,7 @@ export const handlers = [
       case "GWDI":
         const { label } = req.variables.filter
 
-        if (label !== "") {
+        if (label !== undefined) {
           return res(
             ctx.data({
               listStrains: {
@@ -31,6 +31,7 @@ export const handlers = [
             }),
           )
         }
+
         return res(ctx.data(mockGWDIStrains))
       case "REGULAR":
         return res(ctx.data(mockRegularAvailableStrains))
