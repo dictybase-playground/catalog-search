@@ -17,16 +17,15 @@ export const handlers = [
           }),
         )
       case "GWDI":
-        const { filter } = req.variables
-        const splitFilter = filter.split(";")
+        const { label } = req.variables.filter
 
-        if (splitFilter.length === 1 && filter.includes("label")) {
+        if (label !== "") {
           return res(
             ctx.data({
               listStrains: {
                 ...mockGWDIStrains.listStrains,
                 strains: mockGWDIStrains.listStrains.strains.filter((item) =>
-                  item.label.includes(filter.split("=")[1]),
+                  item.label.includes(label),
                 ),
               },
             }),
