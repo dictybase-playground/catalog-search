@@ -16,7 +16,7 @@ const getQueryVariables = (
   const updatedVariables = {
     ...queryVariables,
     filter: {
-      strain_type: strainType?.toUpperCase(),
+      strain_type: strainType?.toUpperCase() || "ALL",
     },
   }
 
