@@ -4,16 +4,41 @@ import FormControl from "@material-ui/core/FormControl"
 import Select from "@material-ui/core/Select"
 import Input from "@material-ui/core/Input"
 import { useCatalogStore } from "./CatalogContext"
+import { QueryVariables } from "./types/context"
 
 type Filters = {
-  [key: string]: string[]
+  [key: string]: {
+    tags: string[]
+    queryFilter: QueryVariables["filter"]
+  }
 }
 
 const presetFilters = {
-  "Regular Strains": ["Stock Type: Regular"],
-  "GWDI Strains": ["Stock Type: GWDI"],
-  "Available Regular Strains": ["Stock Type: Regular", "Currently Available"],
-  "Bacterial Strains": ["Stock Type: Bacterial"],
+  "Regular Strains": {
+    tags: ["Stock Type: Regular"],
+    queryFilter: {
+      strain_type: "REGULAR",
+    },
+  },
+  "GWDI Strains": {
+    tags: ["Stock Type: GWDI"],
+    queryFilter: {
+      strain_type: "GWDI",
+    },
+  },
+  "Available Regular Strains": {
+    tags: ["Stock Type: Regular", "Currently Available"],
+    queryFilter: {
+      strain_type: "REGULAR",
+      in_stock: true,
+    },
+  },
+  "Bacterial Strains": {
+    tags: ["Stock Type: Bacterial"],
+    queryFilter: {
+      strain_type: "BACTERIAL",
+    },
+  },
 } as Filters
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -37,18 +62,6 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }))
 
-const getGraphQLQueryVariables = (presetFilter: string) => {
-  const variables = {
-    cursor: 0,
-    limit: 10,
-    filter: {
-      strain_type: "ALL",
-    },
-  }
-  // need to update this based on the strain_type filter
-  return variables
-}
-
 const FilterDropdown = () => {
   const classes = useStyles()
   const {
@@ -63,9 +76,12 @@ const FilterDropdown = () => {
   ) => {
     const val = event.target.value
     setPresetFilter(val)
-    setActiveFilters(presetFilters[val])
-    const queryVars = getGraphQLQueryVariables(val)
-    setQueryVariables(queryVars)
+    setActiveFilters(presetFilters[val].tags)
+    setQueryVariables({
+      cursor: 0,
+      limit: 10,
+      filter: presetFilters[val].queryFilter,
+    })
   }
 
   return (
