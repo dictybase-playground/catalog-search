@@ -16,7 +16,9 @@ const initialState = {
   queryVariables: {
     cursor: 0,
     limit: 10,
-    filter: "",
+    filter: {
+      strain_type: "ALL",
+    },
   },
 }
 

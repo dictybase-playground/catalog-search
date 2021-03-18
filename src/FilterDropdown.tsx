@@ -41,14 +41,11 @@ const getGraphQLQueryVariables = (presetFilter: string) => {
   const variables = {
     cursor: 0,
     limit: 10,
-    filter: "",
+    filter: {
+      strain_type: "ALL",
+    },
   }
-  if (presetFilter === "Available Regular Strains") {
-    return {
-      ...variables,
-      strain_type: "REGULAR",
-    }
-  }
+  // need to update this based on the strain_type filter
   return variables
 }
 
