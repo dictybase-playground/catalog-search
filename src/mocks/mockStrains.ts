@@ -1,5 +1,5 @@
 const mockRegularStrains = {
-  listRegularStrains: {
+  listStrains: {
     nextCursor: 1563868285000,
     totalCount: 11,
     strains: [
@@ -85,7 +85,7 @@ const mockRegularStrains = {
 }
 
 const mockBacterialStrains = {
-  listBacterialStrains: {
+  listStrains: {
     totalCount: 10,
     nextCursor: 0,
     strains: [
@@ -174,7 +174,7 @@ const mockBacterialStrains = {
 }
 
 const mockRegularAvailableStrains = {
-  listStrainsInventory: {
+  listStrains: {
     nextCursor: 0,
     totalCount: 6,
     strains: [
@@ -230,7 +230,7 @@ const mockRegularAvailableStrains = {
 }
 
 const mockGWDIStrains = {
-  listGWDIStrains: {
+  listStrains: {
     nextCursor: 1614103651886,
     totalCount: 11,
     strains: [
