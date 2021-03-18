@@ -7,6 +7,14 @@ const getStrainType = (filters: string[]) => {
     ?.replace("Stock Type: ", "")
 }
 
+const lookupFilter = (filters: string[], prop: string) => {
+  let propVal = filters.find((item) => item.includes(prop))
+  if (propVal !== undefined) {
+    return propVal.replace(`${prop}: `, "")
+  }
+  return propVal
+}
+
 // update query variables based on active filters
 const getQueryVariables = (
   activeFilters: string[],
@@ -19,6 +27,21 @@ const getQueryVariables = (
 
   if (activeFilters.includes("Currently Available")) {
     graphQLFilter.in_stock = true
+  }
+
+  const descriptor = lookupFilter(activeFilters, "Descriptor")
+  if (descriptor !== undefined) {
+    graphQLFilter.label = descriptor
+  }
+
+  const id = lookupFilter(activeFilters, "ID")
+  if (id !== undefined) {
+    graphQLFilter.id = id
+  }
+
+  const summary = lookupFilter(activeFilters, "Summary")
+  if (summary !== undefined) {
+    graphQLFilter.summary = summary
   }
 
   return {
