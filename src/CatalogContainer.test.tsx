@@ -156,7 +156,7 @@ describe("CatalogContainer", () => {
               cursor: 0,
               limit: 10,
               filter: {
-                strain_type: "REGULAR",
+                strain_type: "ALL",
               },
             },
           },
