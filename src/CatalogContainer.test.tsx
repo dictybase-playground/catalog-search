@@ -3,13 +3,7 @@ import { render, screen } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import CatalogContainer from "./CatalogContainer"
 import { CatalogProvider } from "./CatalogContext"
-import {
-  GET_BACTERIAL_STRAIN_LIST,
-  GET_GWDI_STRAIN_LIST,
-  GET_REGULAR_STRAIN_LIST,
-  GET_STRAIN_INVENTORY_LIST,
-  GET_STRAIN_LIST,
-} from "./graphql/query"
+import { GET_STRAIN_LIST } from "./graphql/query"
 import {
   mockRegularStrains,
   mockBacterialStrains,
@@ -35,22 +29,24 @@ describe("CatalogContainer", () => {
         variables: {
           cursor: 0,
           limit: 10,
-          filter: "",
+          filter: {
+            strain_type: "ALL",
+          },
         },
       },
       result: {
-        data: {
-          listStrains: mockRegularStrains.listRegularStrains,
-        },
+        data: mockRegularStrains,
       },
     },
     {
       request: {
-        query: GET_BACTERIAL_STRAIN_LIST,
+        query: GET_STRAIN_LIST,
         variables: {
           cursor: 0,
           limit: 10,
-          filter: "",
+          filter: {
+            strain_type: "BACTERIAL",
+          },
         },
       },
       result: {
@@ -59,11 +55,13 @@ describe("CatalogContainer", () => {
     },
     {
       request: {
-        query: GET_REGULAR_STRAIN_LIST,
+        query: GET_STRAIN_LIST,
         variables: {
           cursor: 0,
           limit: 10,
-          filter: "",
+          filter: {
+            strain_type: "REGULAR",
+          },
         },
       },
       result: {
@@ -72,10 +70,10 @@ describe("CatalogContainer", () => {
     },
   ]
 
-  const mockItem = `${mockRegularStrains.listRegularStrains.strains[0].id} - ${mockRegularStrains.listRegularStrains.strains[0].label}`
-  const mockBacterialItem = `${mockBacterialStrains.listBacterialStrains.strains[0].id} - ${mockBacterialStrains.listBacterialStrains.strains[0].label}`
-  const mockGWDIItem = `${mockGWDIStrains.listGWDIStrains.strains[0].id} - ${mockGWDIStrains.listGWDIStrains.strains[0].label}`
-  const mockAvailableItem = `${mockRegularAvailableStrains.listStrainsInventory.strains[0].id} - ${mockRegularAvailableStrains.listStrainsInventory.strains[0].label}`
+  const mockItem = `${mockRegularStrains.listStrains.strains[0].id} - ${mockRegularStrains.listStrains.strains[0].label}`
+  const mockBacterialItem = `${mockBacterialStrains.listStrains.strains[0].id} - ${mockBacterialStrains.listStrains.strains[0].label}`
+  const mockGWDIItem = `${mockGWDIStrains.listStrains.strains[0].id} - ${mockGWDIStrains.listStrains.strains[0].label}`
+  const mockAvailableItem = `${mockRegularAvailableStrains.listStrains.strains[0].id} - ${mockRegularAvailableStrains.listStrains.strains[0].label}`
 
   describe("using dropdown menu", () => {
     it("should add search tag on click", async () => {
@@ -157,22 +155,24 @@ describe("CatalogContainer", () => {
             variables: {
               cursor: 0,
               limit: 10,
-              filter: "",
+              filter: {
+                strain_type: "REGULAR",
+              },
             },
           },
           result: {
-            data: {
-              listStrains: mockRegularStrains.listRegularStrains,
-            },
+            data: mockRegularStrains,
           },
         },
         {
           request: {
-            query: GET_GWDI_STRAIN_LIST,
+            query: GET_STRAIN_LIST,
             variables: {
               cursor: 0,
               limit: 10,
-              filter: "",
+              filter: {
+                strain_type: "GWDI",
+              },
             },
           },
           result: {
@@ -181,12 +181,14 @@ describe("CatalogContainer", () => {
         },
         {
           request: {
-            query: GET_STRAIN_INVENTORY_LIST,
+            query: GET_STRAIN_LIST,
             variables: {
               cursor: 0,
               limit: 10,
-              filter: "",
-              strain_type: "REGULAR",
+              filter: {
+                strain_type: "REGULAR",
+                in_stock: true,
+              },
             },
           },
           result: {
