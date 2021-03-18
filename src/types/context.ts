@@ -1,8 +1,13 @@
 type QueryVariables = {
   cursor: number
   limit: number
-  filter?: string
-  strain_type?: string
+  filter?: {
+    label?: string
+    summary?: string
+    id?: string
+    in_stock?: boolean
+    strain_type: string
+  }
 }
 
 type CatalogState = {

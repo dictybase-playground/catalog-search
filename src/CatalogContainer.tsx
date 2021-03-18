@@ -5,18 +5,14 @@ import SearchBox from "./SearchBox"
 import FilterDropdown from "./FilterDropdown"
 import CatalogList from "./CatalogList"
 import { useCatalogStore } from "./CatalogContext"
-import {
-  getQueryFilterString,
-  normalizeDataObject,
-  getGraphQLQuery,
-  getQueryVariables,
-} from "./utils/graphql"
+import { GET_STRAIN_LIST } from "./graphql/query"
+import { getQueryVariables } from "./utils/graphql"
 
 const CatalogContainer = () => {
   const {
     state: { activeFilters, queryVariables },
   } = useCatalogStore()
-  const { loading, error, data } = useQuery(getGraphQLQuery(activeFilters), {
+  const { loading, error, data } = useQuery(GET_STRAIN_LIST, {
     variables: getQueryVariables(activeFilters, queryVariables),
   })
 
@@ -35,11 +31,10 @@ const CatalogContainer = () => {
         <SearchBox />
       </Box>
       <Box>
-        <CatalogList data={normalizeDataObject(data)} />
+        <CatalogList data={data.listStrains} />
       </Box>
     </React.Fragment>
   )
 }
 
-export { getQueryFilterString, normalizeDataObject }
 export default CatalogContainer
