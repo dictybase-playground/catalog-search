@@ -1,7 +1,7 @@
 type QueryVariables = {
   cursor: number
   limit: number
-  filter?: {
+  filter: {
     label?: string
     summary?: string
     id?: string

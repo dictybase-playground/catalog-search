@@ -21,6 +21,7 @@ const CatalogContainer = () => {
   }
 
   if (error) {
+    console.error(error)
     return <div>got error</div>
   }
 
