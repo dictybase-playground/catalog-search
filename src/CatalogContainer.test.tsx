@@ -112,6 +112,8 @@ describe("CatalogContainer", () => {
       // click the X button to remove chip
       userEvent.click(clear)
       expect(chip).not.toBeInTheDocument()
+      // should set filter to default Filters
+      expect(screen.getAllByRole("combobox")[0]).toHaveValue("Filters")
     })
 
     it("should only display one list tag at a time", async () => {
