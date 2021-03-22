@@ -40,7 +40,7 @@ const TagsDisplay = ({
       variant="outlined"
       color="default"
       label={currentOption}
-      data-testid={`${currentOption}-tag`}
+      data-testid={currentOption}
       {...getTagProps({ index: currentIndex })}
     />
   )
