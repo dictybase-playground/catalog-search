@@ -226,4 +226,43 @@ describe("CatalogContainer", () => {
       expect(firstAvailRow).toBeInTheDocument()
     })
   })
+
+  describe("error handling", () => {
+    it("should display error notice", async () => {
+      const mocks = [
+        {
+          request: {
+            query: GET_STRAIN_LIST,
+            variables: {
+              cursor: 0,
+              limit: 10,
+              filter: {
+                strain_type: "ALL",
+              },
+            },
+          },
+          result: {
+            errors: [
+              {
+                message: "No strains found",
+                path: [],
+                extensions: { code: "NotFound" },
+                locations: undefined,
+                nodes: undefined,
+                source: undefined,
+                positions: undefined,
+                originalError: undefined,
+                name: "",
+              },
+            ],
+          },
+        },
+      ]
+
+      render(<MockComponent mocks={mocks} filter="all" />)
+      // wait for error message to load...
+      const errorMsg = await screen.findByText(/got error/)
+      expect(errorMsg).toBeInTheDocument()
+    })
+  })
 })
