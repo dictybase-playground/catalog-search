@@ -29,6 +29,8 @@ const TagsDisplay = ({
   const lastFilterIsInOptionsList =
     lastFilter === currentOption && autocompleteOptions.includes(currentOption)
 
+  // we only want to display plain text if the last filter is not "Currently Available"
+  // and is also inside the list of autocomplete options (i.e. Descriptor)
   if (lastFilter !== "Currently Available" && lastFilterIsInOptionsList) {
     return <span>{currentOption}:</span>
   }

@@ -7,6 +7,8 @@ const getStrainType = (filters: string[]) => {
     ?.replace("Stock Type: ", "")
 }
 
+// check if a given property is in the list of active filters
+// and remove the "key:" from the string
 const lookupFilter = (filters: string[], prop: string) => {
   let propVal = filters.find((item) => item.includes(prop))
   if (propVal !== undefined) {
