@@ -21,8 +21,8 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 const handleDisplayOptions = (activeFilters: string[]) => {
   const lastVal = activeFilters[activeFilters.length - 1]
-  // if the last filter is in the list of options then only return empty array
-  // unless it is a Currently Available tag
+  // Don't return any autocomplete options if the last value is already in the
+  // options (unless that value is "Currently Available")
   if (
     lastVal !== "Currently Available" &&
     autocompleteOptions.includes(lastVal)
