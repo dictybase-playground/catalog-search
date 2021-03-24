@@ -1,4 +1,5 @@
 import { useCatalogStore } from "../CatalogContext"
+import { getQueryVariables } from "../utils/graphql"
 import { autocompleteOptions } from "../constants/autocompleteOptions"
 
 const handleTagDisplay = (
@@ -34,11 +35,17 @@ const handleTagDisplay = (
  */
 
 const useSearchBox = () => {
-  const { setPresetFilter, setActiveFilters } = useCatalogStore()
+  const {
+    state: { queryVariables },
+    setPresetFilter,
+    setActiveFilters,
+    setQueryVariables,
+  } = useCatalogStore()
 
   const handleChange = (event: React.ChangeEvent<{}>, value: string[]) => {
     // synchronize the tags display with the list of active filters
     handleTagDisplay(value, setActiveFilters)
+    setQueryVariables(getQueryVariables(value, queryVariables))
     // go back to default filter if no tags listed
     if (value.length === 0) {
       setPresetFilter("Filters")
