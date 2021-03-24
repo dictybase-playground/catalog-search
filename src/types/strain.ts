@@ -1,16 +1,18 @@
+type Strain = {
+  id: string
+  label: string
+  summary: string
+  in_stock: boolean
+}
+
 type ListStrainsData = {
   nextCursor: number
   totalCount: number
-  strains: Array<{
-    id: string
-    label: string
-    summary: string
-    in_stock: boolean
-  }>
+  strains: Array<Strain>
 }
 
 type StrainLists = {
   listStrains: ListStrainsData
 }
 
-export type { ListStrainsData, StrainLists }
+export type { Strain, ListStrainsData, StrainLists }

@@ -5,6 +5,7 @@ import SearchBox from "./SearchBox"
 import FilterDropdown from "./FilterDropdown"
 import CatalogList from "./CatalogList"
 import { useCatalogStore } from "./CatalogContext"
+import useLoadMoreItems from "./hooks/useLoadMoreItems"
 import { GET_STRAIN_LIST } from "./graphql/query"
 import { getQueryVariables } from "./utils/graphql"
 
@@ -12,9 +13,10 @@ const CatalogContainer = () => {
   const {
     state: { activeFilters, queryVariables },
   } = useCatalogStore()
-  const { loading, error, data } = useQuery(GET_STRAIN_LIST, {
+  const { loading, error, data, fetchMore } = useQuery(GET_STRAIN_LIST, {
     variables: getQueryVariables(activeFilters, queryVariables),
   })
+  const { loadMoreItems, hasMore } = useLoadMoreItems()
 
   if (loading) {
     return <div>loading...</div>
@@ -32,7 +34,12 @@ const CatalogContainer = () => {
         <SearchBox />
       </Box>
       <Box>
-        <CatalogList data={data.listStrains} />
+        <CatalogList
+          data={data.listStrains.strains}
+          loadMore={() => loadMoreItems(data, fetchMore, GET_STRAIN_LIST)}
+          hasMore={hasMore}
+          totalItems={data.listStrains.strains.length}
+        />
       </Box>
     </React.Fragment>
   )

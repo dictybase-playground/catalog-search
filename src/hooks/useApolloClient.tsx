@@ -1,5 +1,6 @@
 import { ApolloClient, InMemoryCache, createHttpLink } from "@apollo/client"
 import { setContext } from "@apollo/client/link/context"
+import { listStrainsPagination } from "../graphql/pagination"
 
 const useApolloClient = () => {
   const authLink = setContext((request, { headers }) => {
@@ -18,7 +19,15 @@ const useApolloClient = () => {
     }),
   )
 
-  const cache = new InMemoryCache()
+  const cache = new InMemoryCache({
+    typePolicies: {
+      Query: {
+        fields: {
+          listStrains: listStrainsPagination(),
+        },
+      },
+    },
+  })
 
   return new ApolloClient({
     cache,
