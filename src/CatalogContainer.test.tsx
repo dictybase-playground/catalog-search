@@ -5,7 +5,7 @@ import CatalogContainer from "./CatalogContainer"
 import { CatalogProvider } from "./CatalogContext"
 import { GET_STRAIN_LIST } from "./graphql/query"
 import {
-  mockRegularStrains,
+  firstTenStrainCatalogItems,
   mockBacterialStrains,
   mockGWDIStrains,
   mockRegularAvailableStrains,
@@ -35,7 +35,7 @@ describe("CatalogContainer", () => {
         },
       },
       result: {
-        data: mockRegularStrains,
+        data: firstTenStrainCatalogItems,
       },
     },
     {
@@ -65,12 +65,12 @@ describe("CatalogContainer", () => {
         },
       },
       result: {
-        data: mockRegularStrains,
+        data: firstTenStrainCatalogItems,
       },
     },
   ]
 
-  const mockItem = `${mockRegularStrains.listStrains.strains[0].id} - ${mockRegularStrains.listStrains.strains[0].label}`
+  const mockItem = `${firstTenStrainCatalogItems.listStrains.strains[0].id} - ${firstTenStrainCatalogItems.listStrains.strains[0].label}`
   const mockBacterialItem = `${mockBacterialStrains.listStrains.strains[0].id} - ${mockBacterialStrains.listStrains.strains[0].label}`
   const mockGWDIItem = `${mockGWDIStrains.listStrains.strains[0].id} - ${mockGWDIStrains.listStrains.strains[0].label}`
   const mockAvailableItem = `${mockRegularAvailableStrains.listStrains.strains[0].id} - ${mockRegularAvailableStrains.listStrains.strains[0].label}`
@@ -163,7 +163,7 @@ describe("CatalogContainer", () => {
             },
           },
           result: {
-            data: mockRegularStrains,
+            data: firstTenStrainCatalogItems,
           },
         },
         {

@@ -1,9 +1,11 @@
 import { graphql } from "msw"
 import {
-  mockRegularStrains,
+  firstTenStrainCatalogItems,
   mockBacterialStrains,
   mockRegularAvailableStrains,
   mockGWDIStrains,
+  nextTenStrainCatalogItems,
+  lastFiveStrainCatalogItems,
 } from "./mockStrains"
 
 export const handlers = [
@@ -11,9 +13,27 @@ export const handlers = [
     const { strain_type } = req.variables.filter
     switch (strain_type) {
       case "ALL":
+        const { cursor } = req.variables
+
+        if (cursor === firstTenStrainCatalogItems.listStrains.nextCursor) {
+          return res(
+            ctx.data({
+              listStrains: nextTenStrainCatalogItems.listStrains,
+            }),
+          )
+        }
+
+        if (cursor === nextTenStrainCatalogItems.listStrains.nextCursor) {
+          return res(
+            ctx.data({
+              listStrains: lastFiveStrainCatalogItems.listStrains,
+            }),
+          )
+        }
+
         return res(
           ctx.data({
-            listStrains: mockRegularStrains.listStrains,
+            listStrains: firstTenStrainCatalogItems.listStrains,
           }),
         )
       case "GWDI":
