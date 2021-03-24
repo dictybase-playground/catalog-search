@@ -7,14 +7,13 @@ import CatalogList from "./CatalogList"
 import { useCatalogStore } from "./CatalogContext"
 import useLoadMoreItems from "./hooks/useLoadMoreItems"
 import { GET_STRAIN_LIST } from "./graphql/query"
-import { getQueryVariables } from "./utils/graphql"
 
 const CatalogContainer = () => {
   const {
-    state: { activeFilters, queryVariables },
+    state: { queryVariables },
   } = useCatalogStore()
   const { loading, error, data, fetchMore } = useQuery(GET_STRAIN_LIST, {
-    variables: getQueryVariables(activeFilters, queryVariables),
+    variables: queryVariables,
   })
   const { loadMoreItems, hasMore } = useLoadMoreItems()
 
@@ -36,7 +35,9 @@ const CatalogContainer = () => {
       <Box>
         <CatalogList
           data={data.listStrains.strains}
-          loadMore={() => loadMoreItems(data, fetchMore, GET_STRAIN_LIST)}
+          loadMore={() =>
+            loadMoreItems(data.listStrains, fetchMore, GET_STRAIN_LIST)
+          }
           hasMore={hasMore}
           totalItems={data.listStrains.strains.length}
         />
