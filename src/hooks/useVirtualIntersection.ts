@@ -23,6 +23,77 @@ type ConfigParams = {
   hasMore: boolean
 }
 
+type ObserverParams = {
+  /** React ref for element that is used as viewport for checking visibility of target */
+  targetRef: React.MutableRefObject<any> | null
+  prevTargetRef: React.MutableRefObject<any> | null
+  /** Margin around the root */
+  rootMargin?: string
+  /** Indicates the percentage of the target's visibility the observer's
+   * callback should be executed */
+  threshold?: number
+  /** Indicates whether there are more items to fetch */
+  hasMore: boolean
+}
+
+const useIntersectionObserver = ({
+  targetRef,
+  prevTargetRef,
+  rootMargin = "0px",
+  threshold = 0.25,
+  hasMore,
+}: ObserverParams) => {
+  const [intersecting, setIntersecting] = React.useState(false)
+  const observerRef = React.useRef<any>(null)
+
+  // set up callback fn that updates isIntersecting state if there is
+  // more data to fetch
+  const observerCallback = React.useCallback(
+    ([entry]: IntersectionObserverEntry[]) => {
+      if (hasMore) {
+        setIntersecting(entry.isIntersecting)
+      }
+    },
+    [hasMore],
+  )
+
+  // callback fn that adds intersection observer to observer ref
+  // and observes the target ref if it exists
+  const observe = React.useCallback(() => {
+    observerRef.current = new IntersectionObserver(observerCallback, {
+      rootMargin,
+      threshold,
+    })
+
+    if (targetRef) {
+      observerRef.current.observe(targetRef)
+    }
+  }, [observerCallback, rootMargin, targetRef, threshold])
+
+  // standard callback fn to disconnect from observer
+  const disconnect = React.useCallback(() => {
+    if (observerRef && observerRef.current) {
+      observerRef.current.disconnect()
+    }
+  }, [])
+
+  // set up the intersection observer
+  React.useEffect(() => {
+    // if the target ref matches the previous ref, set intersecting to false;
+    // this prevents unwanted extra fetches
+    // @ts-ignore
+    if (targetRef === prevTargetRef.current) {
+      setIntersecting(false)
+    }
+    observe()
+    return () => {
+      disconnect()
+    }
+  }, [observe, disconnect, targetRef, prevTargetRef])
+
+  return intersecting
+}
+
 const useVirtualIntersection = ({
   parentRef,
   viewportHeight,
@@ -39,10 +110,15 @@ const useVirtualIntersection = ({
    * height.
    */
   const [scrollTop, setScrollTop] = React.useState(0)
-  const [intersecting, setIntersecting] = React.useState(false)
   const [targetRef, setTargetRef] = React.useState(null)
   const prevTargetRef = React.useRef<any>(targetRef)
-  const observerRef = React.useRef<any>(null)
+  const intersecting = useIntersectionObserver({
+    targetRef,
+    prevTargetRef,
+    rootMargin,
+    threshold,
+    hasMore,
+  })
 
   // calculate the start and end indexes of list items to render to DOM
   let startIndex = Math.floor(scrollTop / rowHeight)
@@ -94,51 +170,7 @@ const useVirtualIntersection = ({
     prevTargetRef.current = targetRef
   }, [targetRef])
 
-  // set up callback fn that updates isIntersecting state if there is
-  // more data to fetch
-  const observerCallback = React.useCallback(
-    ([entry]: IntersectionObserverEntry[]) => {
-      if (hasMore) {
-        setIntersecting(entry.isIntersecting)
-      }
-    },
-    [hasMore],
-  )
-
-  // callback fn that adds intersection observer to observer ref
-  // and observes the target ref if it exists
-  const observe = React.useCallback(() => {
-    observerRef.current = new IntersectionObserver(observerCallback, {
-      rootMargin,
-      threshold,
-    })
-
-    if (targetRef) {
-      observerRef.current.observe(targetRef)
-    }
-  }, [observerCallback, rootMargin, targetRef, threshold])
-
-  // standard callback fn to disconnect from observer
-  const disconnect = React.useCallback(() => {
-    if (observerRef && observerRef.current) {
-      observerRef.current.disconnect()
-    }
-  }, [])
-
-  // set up the intersection observer
-  React.useEffect(() => {
-    // if the target ref matches the previous ref, set intersecting to false;
-    // this prevents unwanted extra fetches
-    if (targetRef === prevTargetRef.current) {
-      setIntersecting(false)
-    }
-    observe()
-    return () => {
-      disconnect()
-    }
-  }, [observe, disconnect, targetRef])
-
-  return { items, intersecting, setIntersecting, setTargetRef }
+  return { items, intersecting, setTargetRef }
 }
 
 export default useVirtualIntersection
