@@ -33,17 +33,17 @@ type Props = {
 
 const CatalogList = ({ data, loadMore, hasMore }: Props) => {
   const parentRef = React.useRef<HTMLDivElement>(null)
+  const totalItems = data.length
   const { items, intersecting, setTargetRef } = useVirtualIntersection({
     parentRef,
     viewportHeight: 310,
     rowHeight: 35,
     overscan: 2,
-    numItems: data.length,
+    numItems: totalItems,
     hasMore: true,
   })
   const classes = useStyles()
 
-  const totalItems = data.length
   // total height of the list itself
   const innerHeight = totalItems * 35
 
