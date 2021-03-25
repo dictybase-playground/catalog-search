@@ -19,6 +19,7 @@ const useLoadMoreItems = () => {
     query: DocumentNode,
   ) => {
     const newCursor = data.nextCursor
+
     if (newCursor === 0) {
       setHasMore(false)
       return
@@ -27,8 +28,8 @@ const useLoadMoreItems = () => {
       query,
       variables: {
         cursor: newCursor,
-        filter: queryVariables.filter,
         limit: queryVariables.limit,
+        filter: queryVariables.filter,
       },
     })
   }

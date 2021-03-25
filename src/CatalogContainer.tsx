@@ -39,7 +39,6 @@ const CatalogContainer = () => {
             loadMoreItems(data.listStrains, fetchMore, GET_STRAIN_LIST)
           }
           hasMore={hasMore}
-          totalItems={data.listStrains.strains.length}
         />
       </Box>
     </React.Fragment>
