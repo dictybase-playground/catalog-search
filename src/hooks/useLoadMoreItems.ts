@@ -1,12 +1,20 @@
 import React from "react"
-import { DocumentNode } from "@apollo/client"
+import { DocumentNode, ApolloQueryResult } from "@apollo/client"
 import { useCatalogStore } from "../CatalogContext"
+import { ListStrainsData } from "../types/strain"
+import { QueryVariables } from "../types/context"
+
+type FetchMoreQuery = {
+  /** GraphQL query to use */
+  query: DocumentNode
+  /** Variables to use for the above query */
+  variables: QueryVariables
+}
 
 /**
  * useLoadMoreItems provides a callback for fetching more data (generally used
  * for infinite scrolling).
  */
-
 const useLoadMoreItems = () => {
   const [hasMore, setHasMore] = React.useState(true)
   const {
@@ -14,8 +22,10 @@ const useLoadMoreItems = () => {
   } = useCatalogStore()
 
   const loadMoreItems = async (
-    data: any,
-    fetchMore: any,
+    data: ListStrainsData,
+    fetchMore: (
+      arg0: FetchMoreQuery,
+    ) => Promise<ApolloQueryResult<ListStrainsData>>,
     query: DocumentNode,
   ) => {
     const newCursor = data.nextCursor
@@ -27,9 +37,8 @@ const useLoadMoreItems = () => {
     await fetchMore({
       query,
       variables: {
+        ...queryVariables,
         cursor: newCursor,
-        limit: queryVariables.limit,
-        filter: queryVariables.filter,
       },
     })
   }
