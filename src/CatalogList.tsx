@@ -29,10 +29,9 @@ type Props = {
   data: ListStrainsData["strains"]
   loadMore: () => void
   hasMore: boolean
-  totalItems: number
 }
 
-const CatalogList = ({ data, loadMore, hasMore, totalItems }: Props) => {
+const CatalogList = ({ data, loadMore, hasMore }: Props) => {
   const parentRef = React.useRef<HTMLDivElement>(null)
   const { items, intersecting, setTargetRef } = useVirtualIntersection({
     parentRef,
@@ -43,8 +42,10 @@ const CatalogList = ({ data, loadMore, hasMore, totalItems }: Props) => {
     hasMore: true,
   })
   const classes = useStyles()
+
+  const totalItems = data.length
   // total height of the list itself
-  const innerHeight = data.length * 35
+  const innerHeight = totalItems * 35
 
   React.useEffect(() => {
     if (intersecting && hasMore) {
@@ -55,7 +56,7 @@ const CatalogList = ({ data, loadMore, hasMore, totalItems }: Props) => {
   const listItems = items.map((item: any) => {
     const strain = data[item.index]
     const lastRow = totalItems - 1 === item.index
-    if (lastRow) {
+    if (lastRow && hasMore) {
       return (
         <ListItem
           // @ts-ignore
