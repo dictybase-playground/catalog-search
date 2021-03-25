@@ -9,13 +9,14 @@ import {
 } from "./mockStrains"
 
 export const handlers = [
-  graphql.query("StrainList", (req, res, ctx) => {
+  graphql.query("StrainList", async (req, res, ctx) => {
     const { strain_type } = req.variables.filter
     switch (strain_type) {
       case "ALL":
         const { cursor } = req.variables
 
         if (cursor === firstTenStrainCatalogItems.listStrains.nextCursor) {
+          await new Promise((resolve) => setTimeout(resolve, 1000))
           return res(
             ctx.data({
               listStrains: nextTenStrainCatalogItems.listStrains,
@@ -24,6 +25,7 @@ export const handlers = [
         }
 
         if (cursor === nextTenStrainCatalogItems.listStrains.nextCursor) {
+          await new Promise((resolve) => setTimeout(resolve, 1000))
           return res(
             ctx.data({
               listStrains: lastFiveStrainCatalogItems.listStrains,
