@@ -5088,6 +5088,10 @@ detect-port-alt@1.1.6:
     address "^1.0.1"
     debug "^2.6.0"
 
+dicty-hooks@dictybase/dicty-hooks:
+  version "0.0.0-semantically-released"
+  resolved "https://codeload.github.com/dictybase/dicty-hooks/tar.gz/3078caf4648dbc4f3c51c686b33cc6e3e1167046"
+
 diff-sequences@^26.5.0:
   version "26.5.0"
   resolved "https://registry.yarnpkg.com/diff-sequences/-/diff-sequences-26.5.0.tgz#ef766cf09d43ed40406611f11c6d8d9dd8b2fefd"

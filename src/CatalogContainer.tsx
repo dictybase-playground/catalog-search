@@ -3,7 +3,8 @@ import { useQuery } from "@apollo/client"
 import Box from "@material-ui/core/Box"
 import SearchBox from "./SearchBox"
 import FilterDropdown from "./FilterDropdown"
-import CatalogList from "./CatalogList"
+// import CatalogList from "./CatalogList"
+import CatalogListHooks from "./CatalogListHooks"
 import { useCatalogStore } from "./CatalogContext"
 import useLoadMoreItems from "./hooks/useLoadMoreItems"
 import { GET_STRAIN_LIST } from "./graphql/query"
@@ -33,7 +34,7 @@ const CatalogContainer = () => {
         <SearchBox />
       </Box>
       <Box>
-        <CatalogList
+        <CatalogListHooks
           data={data.listStrains.strains}
           loadMore={() =>
             loadMoreItems(data.listStrains, fetchMore, GET_STRAIN_LIST)
