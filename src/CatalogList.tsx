@@ -3,7 +3,8 @@ import { makeStyles } from "@material-ui/core/styles"
 import Paper from "@material-ui/core/Paper"
 import List from "@material-ui/core/List"
 import ListItem from "@material-ui/core/ListItem"
-import useVirtualIntersection from "./hooks/useVirtualIntersection"
+import { useVirtualList } from "dicty-hooks"
+import useIntersectionObserver from "./hooks/useIntersectionObserver"
 import { ListStrainsData } from "./types/strain"
 
 const useStyles = makeStyles(() => ({
@@ -34,13 +35,14 @@ type Props = {
 const CatalogList = ({ data, loadMore, hasMore }: Props) => {
   const parentRef = React.useRef<HTMLDivElement>(null)
   const totalItems = data.length
-  const { items, intersecting, setTargetRef } = useVirtualIntersection({
-    parentRef,
+  const rowData = useVirtualList({
+    ref: parentRef,
     viewportHeight: 310,
     rowHeight: 35,
-    overscan: 2,
     numItems: totalItems,
-    hasMore: true,
+  })
+  const { intersecting, ref } = useIntersectionObserver({
+    hasMore,
   })
   const classes = useStyles()
 
@@ -48,19 +50,19 @@ const CatalogList = ({ data, loadMore, hasMore }: Props) => {
   const innerHeight = totalItems * 35
 
   React.useEffect(() => {
+    // may need to check for loading/refetching boolean too
     if (intersecting && hasMore) {
       loadMore()
     }
   }, [hasMore, intersecting, loadMore])
 
-  const listItems = items.map((item: any) => {
+  const listItems = rowData.items.map((item: any) => {
     const strain = data[item.index]
     const lastRow = totalItems - 1 === item.index
     if (lastRow && hasMore) {
       return (
         <ListItem
-          // @ts-ignore
-          ref={setTargetRef}
+          ref={ref}
           key={item.index}
           id={`row-${item.index}`}
           data-testid={`row-${item.index}`}
