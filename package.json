@@ -7,6 +7,7 @@
     "@apollo/client": "^3.3.11",
     "@material-ui/core": "^4.11.3",
     "@material-ui/lab": "^4.0.0-alpha.57",
+    "dicty-hooks": "dictybase/dicty-hooks",
     "fontsource-roboto": "^4.0.0",
     "graphql": "^15.5.0",
     "react": "^17.0.1",
