@@ -77,9 +77,7 @@ const CatalogList = ({ data, loadMore, hasMore }: Props) => {
         data-testid={`row-${item.index}`}
         className={classes.row}
         style={item.style}>
-        <strong>ID:</strong>&nbsp;{strain.id} &nbsp;
-        <strong>Descriptor:</strong>&nbsp;
-        {strain.label}
+        {strain.id} - {strain.label}
       </ListItem>
     )
   })
