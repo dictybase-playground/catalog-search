@@ -17,14 +17,9 @@ const CatalogContainer = () => {
   })
   const { loadMoreItems, hasMore } = useLoadMoreItems()
 
-  if (loading) {
-    return <div>loading...</div>
-  }
+  if (loading) return <div>loading...</div>
 
-  if (error) {
-    console.error(error)
-    return <div>got error</div>
-  }
+  if (error) return <div>got error :(</div>
 
   return (
     <React.Fragment>
