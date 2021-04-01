@@ -41,9 +41,7 @@ const CatalogList = ({ data, loadMore, hasMore }: Props) => {
     rowHeight: 35,
     numItems: totalItems,
   })
-  const { intersecting, ref } = useIntersectionObserver({
-    hasMore,
-  })
+  const { intersecting, ref } = useIntersectionObserver()
   const classes = useStyles()
 
   // total height of the list itself
