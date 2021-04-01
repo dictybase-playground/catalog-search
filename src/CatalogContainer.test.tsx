@@ -12,6 +12,13 @@ import {
 } from "./mocks/mockStrains"
 
 describe("CatalogContainer", () => {
+  beforeAll(() => {
+    let window = global as any
+    window.IntersectionObserver = jest.fn((callback, options) => ({
+      observe: jest.fn(),
+      disconnect: jest.fn(),
+    }))
+  })
   const MockComponent = ({ mocks = listMocks }: any) => {
     return (
       <MockedProvider mocks={mocks} addTypename={false}>
