@@ -6,6 +6,7 @@ import ListItem from "@material-ui/core/ListItem"
 import { useVirtualList } from "dicty-hooks"
 import useIntersectionObserver from "./hooks/useIntersectionObserver"
 import { ListStrainsData } from "./types/strain"
+import { ListItemText } from "@material-ui/core"
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -75,9 +76,15 @@ const CatalogList = ({ data, loadMore, hasMore }: Props) => {
         key={item.index}
         id={`row-${item.index}`}
         data-testid={`row-${item.index}`}
-        className={classes.row}
-        style={item.style}>
-        {strain.id} - {strain.label}
+        className={classes.row}>
+        <ListItemText
+          primary={
+            <div>
+              <b>{strain.id}</b> - {strain.label}
+            </div>
+          }
+          secondary={strain.summary}
+        />
       </ListItem>
     )
   })
