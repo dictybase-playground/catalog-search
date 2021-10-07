@@ -24,21 +24,21 @@ export const getStrainType = (strain: string = "Regular") => strain.toUpperCase(
 
 const presetFilters = {
   "Regular Strains": {
-    tags: ["Stock Type: Regular"],
+    tags: [getFilterChipLabel()],
     queryFilter: {
-      strain_type: "REGULAR",
+      strain_type: getStrainType(),
     },
   },
   "GWDI Strains": {
-    tags: ["Stock Type: GWDI"],
+    tags: [getFilterChipLabel("GWDI")],
     queryFilter: {
-      strain_type: "GWDI",
+      strain_type: getStrainType("GWDI"),
     },
   },
   "Bacterial Strains": {
-    tags: ["Stock Type: Bacterial"],
+    tags: [getFilterChipLabel("Bacterial")],
     queryFilter: {
-      strain_type: "BACTERIAL",
+      strain_type: getStrainType("Bacterial"),
     },
   },
 } as Filters
@@ -88,7 +88,7 @@ const FilterDropdown = () => {
 
   return (
     <span className={classes.filter}>
-      <FormControl>
+      <FormControl fullWidth={true}>
         <Select
           native
           onChange={handleChange}
