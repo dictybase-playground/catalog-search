@@ -26,13 +26,6 @@ const presetFilters = {
       strain_type: "GWDI",
     },
   },
-  "Available Regular Strains": {
-    tags: ["Stock Type: Regular", "Currently Available"],
-    queryFilter: {
-      strain_type: "REGULAR",
-      in_stock: true,
-    },
-  },
   "Bacterial Strains": {
     tags: ["Stock Type: Bacterial"],
     queryFilter: {
