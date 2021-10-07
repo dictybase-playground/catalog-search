@@ -75,6 +75,7 @@ const SearchBox = () => {
             classes={{
               root: classes.root,
             }}
+            focused={true}
           />
         )}
       />
