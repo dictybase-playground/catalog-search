@@ -28,8 +28,9 @@ const useLoadMoreItems = () => {
     ) => Promise<ApolloQueryResult<ListStrainsData>>,
     query: DocumentNode,
   ) => {
-    const newCursor = data.nextCursor
+    const newCursor = data.nextCursor // Represents the next page (if any)
 
+    // If cursor is 0 then no need to load more strains
     if (newCursor === 0) {
       setHasMore(false)
       return
