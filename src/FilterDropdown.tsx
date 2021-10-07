@@ -13,6 +13,15 @@ type Filters = {
   }
 }
 
+/**
+ * Returns the full option name, given a strain (Ex. `filterWithStrain("GWDI") -> "GWDI Strains"`)
+ * @param strain Type of strain: Regular, GWDI, Bacterial
+ * @returns [Strain] Strains
+ */
+export const getFilterChipLabel = (strain: string = "Regular") => `Stock Type: ${strain}`
+
+export const getStrainType = (strain: string = "Regular") => strain.toUpperCase()
+
 const presetFilters = {
   "Regular Strains": {
     tags: ["Stock Type: Regular"],
