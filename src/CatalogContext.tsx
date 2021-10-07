@@ -1,4 +1,5 @@
 import React from "react"
+import { getFilterChipLabel, getStrainType } from "./FilterDropdown"
 import {
   CatalogState,
   CatalogActionType,
@@ -9,15 +10,15 @@ import {
 
 const initialState = {
   /** Value of preset filter dropdown menu */
-  presetFilter: "Filters",
+  presetFilter: "Regular Strains",
   /** List of active filters shown in search box (as tags) */
-  activeFilters: [],
+  activeFilters: [getFilterChipLabel("Regular")],
   /** GraphQL query variables */
   queryVariables: {
     cursor: 0,
     limit: 10,
     filter: {
-      strain_type: "ALL",
+      strain_type: getStrainType("Regular"),
     },
   },
 }
