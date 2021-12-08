@@ -24,7 +24,7 @@ export namespace AppContextTypes {
   }
 
   export interface Action {
-    type: CatalogActionType.SET_PRESET_FILTER | CatalogActionType.SET_ACTIVE_FILTERS | CatalogActionType.SET_QUERY_VARIABLES,
+    type: CatalogActionType.SET_PRESET_FILTER | CatalogActionType.SET_ACTIVE_FILTERS | CatalogActionType.SET_QUERY_VARIABLES
     payload: string | string[] | QueryVariables
   }
 

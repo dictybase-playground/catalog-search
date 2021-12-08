@@ -1,18 +1,20 @@
-type Strain = {
-  id: string
-  label: string
-  summary: string
-  in_stock: boolean
+export namespace StrainTypes {
+  export interface Strain {
+    id: string
+    label: string
+    summary: string
+    in_stock: boolean
+  }
+
+  export interface ListStrainsData {
+    nextCursor: number
+    totalCount: number
+    strains: Strain[]
+  }
+
+  export interface StrainLists {
+    listStrains: ListStrainsData
+  }
 }
 
-type ListStrainsData = {
-  nextCursor: number
-  totalCount: number
-  strains: Array<Strain>
-}
 
-type StrainLists = {
-  listStrains: ListStrainsData
-}
-
-export type { Strain, ListStrainsData, StrainLists }
