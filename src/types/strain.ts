@@ -1,4 +1,4 @@
-export namespace StrainTypes {
+export declare namespace StrainTypes {
   export interface Strain {
     id: string
     label: string

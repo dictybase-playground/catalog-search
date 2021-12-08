@@ -1,4 +1,4 @@
-export namespace AppContextTypes {
+export declare namespace AppContextTypes {
   export interface QueryVariables {
     cursor: number
     limit: number
