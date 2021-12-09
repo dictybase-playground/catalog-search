@@ -5088,6 +5088,10 @@ detect-port-alt@1.1.6:
     address "^1.0.1"
     debug "^2.6.0"
 
+dicty-graphql-schema@dictyBase/dicty-graphql-schema#v1.2.0:
+  version "1.2.0"
+  resolved "https://codeload.github.com/dictyBase/dicty-graphql-schema/tar.gz/7101a4600b193d8061f3b40b29222aeeb98a431e"
+
 dicty-hooks@dictybase/dicty-hooks:
   version "0.0.0-semantically-released"
   resolved "https://codeload.github.com/dictybase/dicty-hooks/tar.gz/3078caf4648dbc4f3c51c686b33cc6e3e1167046"
