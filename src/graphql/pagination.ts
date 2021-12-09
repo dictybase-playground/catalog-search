@@ -1,9 +1,9 @@
-import { ListStrainsData } from "../types/strain"
+import { AppStrainTypes } from "../types/strain"
 
 const listStrainsPagination = () => ({
   keyArgs: ["filter"],
-  merge(existing: ListStrainsData, incoming: ListStrainsData) {
-    let strains: ListStrainsData["strains"] = []
+  merge(existing:AppStrainTypes.ListStrainsData, incoming: AppStrainTypes.ListStrainsData) {
+    let strains: AppStrainTypes.ListStrainsData["strains"] = []
     if (existing) {
       strains = strains.concat(existing.strains)
     }
@@ -15,7 +15,7 @@ const listStrainsPagination = () => ({
       strains,
     }
   },
-  read(existing: ListStrainsData) {
+  read(existing: AppStrainTypes.ListStrainsData) {
     return existing
   },
 })

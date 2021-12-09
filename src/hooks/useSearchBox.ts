@@ -45,7 +45,8 @@ const useSearchBox = () => {
   const handleChange = (event: React.ChangeEvent<{}>, value: string[]) => {
     // synchronize the tags display with the list of active filters
     handleTagDisplay(value, setActiveFilters)
-    setQueryVariables(getQueryVariables(value, queryVariables))
+    const queryVars = getQueryVariables(value,queryVariables)
+    setQueryVariables(queryVars)
     // go back to default filter if no tags listed
     if (value.length === 0) {
       setPresetFilter("Filters")

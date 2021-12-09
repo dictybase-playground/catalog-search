@@ -5,10 +5,10 @@ import App from "./App"
 import reportWebVitals from "./reportWebVitals"
 import "fontsource-roboto"
 
-if (process.env.NODE_ENV === "development") {
-  const { worker } = require("./mocks/browser")
-  worker.start()
-}
+// if (process.env.NODE_ENV === "development") {
+//   const { worker } = require("./mocks/browser")
+//   worker.start()
+// } 
 
 ReactDOM.render(
   <React.StrictMode>

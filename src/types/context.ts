@@ -2,6 +2,9 @@ export declare namespace AppContextTypes {
   export interface QueryVariables {
     cursor: number
     limit: number
+  }
+
+  export interface QueryVariablesWithFilter extends QueryVariables {
     filter: {
       label?: string
       summary?: string
@@ -14,7 +17,7 @@ export declare namespace AppContextTypes {
   export interface CatalogState {
     presetFilter: string
     activeFilters: string[]
-    queryVariables: QueryVariables
+    queryVariables: QueryVariablesWithFilter
   }
 
   export enum CatalogActionType {
@@ -23,10 +26,15 @@ export declare namespace AppContextTypes {
     SET_QUERY_VARIABLES = "SET_QUERY_VARIABLES",
   }
 
-  export interface Action {
-    type: CatalogActionType.SET_PRESET_FILTER | CatalogActionType.SET_ACTIVE_FILTERS | CatalogActionType.SET_QUERY_VARIABLES
+  /* export interface Action {
+    type: CatalogActionType
     payload: string | string[] | QueryVariables
-  }
+  } */
+
+  export type Action =
+    | { type: CatalogActionType.SET_PRESET_FILTER, payload: string }
+    | { type: CatalogActionType.SET_ACTIVE_FILTERS, payload: string[] }
+    | { type: CatalogActionType.SET_QUERY_VARIABLES, payload: QueryVariablesWithFilter }
 
   export interface CatalogContextProps {
     state: CatalogState

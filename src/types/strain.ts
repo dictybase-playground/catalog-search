@@ -1,4 +1,4 @@
-export declare namespace StrainTypes {
+export declare namespace AppStrainTypes {
   export interface Strain {
     id: string
     label: string

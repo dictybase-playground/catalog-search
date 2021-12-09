@@ -1,11 +1,12 @@
-import { QueryVariables } from "../types/context"
+import { AppContextTypes } from "../types/context"
+
 
 // update query variables based on active filters
 const getQueryVariables = (
   activeFilters: string[],
-  queryVariables: QueryVariables,
+  queryVariables: AppContextTypes.QueryVariablesWithFilter,
 ) => {
-  const graphQLFilter = queryVariables.filter as QueryVariables["filter"]
+  const graphQLFilter = queryVariables.filter as AppContextTypes.QueryVariablesWithFilter["filter"]
 
   activeFilters.forEach((val) => {
     const splitVal = val.split(": ")

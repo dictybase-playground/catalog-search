@@ -1,14 +1,14 @@
 import React from "react"
 import { DocumentNode, ApolloQueryResult } from "@apollo/client"
 import { useCatalogStore } from "../CatalogContext"
-import { ListStrainsData } from "../types/strain"
-import { QueryVariables } from "../types/context"
+import { AppStrainTypes } from "../types/strain"
+import { AppContextTypes } from "../types/context"
 
 type FetchMoreQuery = {
   /** GraphQL query to use */
   query: DocumentNode
   /** Variables to use for the above query */
-  variables: QueryVariables
+  variables: AppContextTypes.QueryVariables
 }
 
 /**
@@ -22,10 +22,10 @@ const useLoadMoreItems = () => {
   } = useCatalogStore()
 
   const loadMoreItems = async (
-    data: ListStrainsData,
+    data: AppStrainTypes.ListStrainsData,
     fetchMore: (
       arg0: FetchMoreQuery,
-    ) => Promise<ApolloQueryResult<ListStrainsData>>,
+    ) => Promise<ApolloQueryResult<AppStrainTypes.ListStrainsData>>,
     query: DocumentNode,
   ) => {
     const newCursor = data.nextCursor

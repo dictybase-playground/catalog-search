@@ -4,12 +4,12 @@ import FormControl from "@material-ui/core/FormControl"
 import Select from "@material-ui/core/Select"
 import Input from "@material-ui/core/Input"
 import { useCatalogStore } from "./CatalogContext"
-import { QueryVariables } from "./types/context"
+import { AppContextTypes } from "./types/context"
 
 type Filters = {
   [key: string]: {
     tags: string[]
-    queryFilter: QueryVariables["filter"]
+    queryFilter:AppContextTypes.QueryVariablesWithFilter["filter"]
   }
 }
 

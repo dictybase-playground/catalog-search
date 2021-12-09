@@ -5,7 +5,7 @@ import List from "@material-ui/core/List"
 import ListItem from "@material-ui/core/ListItem"
 import { useVirtualList } from "dicty-hooks"
 import useIntersectionObserver from "./hooks/useIntersectionObserver"
-import { ListStrainsData } from "./types/strain"
+import { AppStrainTypes } from "./types/strain"
 
 const useStyles = makeStyles(() => ({
   container: {
@@ -27,7 +27,7 @@ const useStyles = makeStyles(() => ({
 }))
 
 type Props = {
-  data: ListStrainsData["strains"]
+  data: AppStrainTypes.ListStrainsData["strains"]
   loadMore: () => void
   hasMore: boolean
 }
