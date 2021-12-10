@@ -16,22 +16,14 @@ const useStyles = makeStyles(() => ({
 
 export default function CatalogList({ data, target: targetRef }: AppProps.CatalogListProps): JSX.Element {
   const classes = useStyles()
-  let component = null
-  if (data) {
-    const { strains, nextCursor } = data.listStrains
-    component = strains.map((item: any, idx: number) => {
-      if ((idx === strains.length - 1) && nextCursor) { // last item and expected to have more data
-        return (
-          <ListItem
-            ref={targetRef} key={item.id}
-            className={classes.row}
-          >
-            {item.id} - {item.label}
-          </ListItem>
-        )
-      }
-      return <ListItem key={item.id} className={classes.row}>{item.id} - {item.label}</ListItem>
-    })
-  }
+  const { strains, nextCursor } = data.listStrains
+  const lastIndex = strains.length - 1
+  const component = strains.map((item: any, idx: number) => {
+    let props: AppProps.CatalogListItemProps = { key: item.id, className: classes.row }
+    if ((idx === lastIndex) && nextCursor !== 0) { // last item and expected to have more data
+      props = { ref: targetRef, ...props }
+    }
+    return <ListItem {...props}> {item.id} - {item.label} </ListItem>
+  })
   return component
 }
