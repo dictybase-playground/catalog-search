@@ -6,15 +6,27 @@ export declare namespace AppProps {
     children: JSX.Element | JSX.Element[] | null
   }
 
-  export interface CatalogListProps {
+  export interface CatalogListProps<Type> {
     data: any,
-    target: RefObject<HTMLLIElement>
+    target: RefObject<Type>
   }
 
-  export interface CatalogListItemProps {
+  export interface CatalogTableRowProps<Type> {
     key: string
+    ref?: RefObject<Type>
+  }
+
+  export interface CatalogRowFnProps<Type> {
+    strains: any
+    nextCursor: number
+    lastIndex: number
+    targetRef: RefObject<Type>
+  }
+
+  export interface CatalogListItemProps<Type> {
+    key: string
+    ref?: RefObject<Type>
     className: string,
-    ref?: RefObject<HTMLLIElement>
   }
 
   export interface LoadingDisplayProps {

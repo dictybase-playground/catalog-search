@@ -14,12 +14,12 @@ const useStyles = makeStyles(() => ({
   }
 }))
 
-export default function CatalogList({ data, target: targetRef }: AppProps.CatalogListProps): JSX.Element {
+export default function CatalogList({ data, target: targetRef }: AppProps.CatalogListProps<HTMLLIElement>): JSX.Element {
   const classes = useStyles()
   const { strains, nextCursor } = data.listStrains
   const lastIndex = strains.length - 1
   const component = strains.map((item: any, idx: number) => {
-    let props: AppProps.CatalogListItemProps = { key: item.id, className: classes.row }
+    let props: AppProps.CatalogListItemProps<HTMLLIElement> = { key: item.id, className: classes.row }
     if ((idx === lastIndex) && nextCursor !== 0) { // last item and expected to have more data
       props = { ref: targetRef, ...props }
     }

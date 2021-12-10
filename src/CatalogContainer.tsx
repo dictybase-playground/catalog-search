@@ -6,13 +6,13 @@ import ErrorDisplay from "./components/ErrorDisplay"
 import { StrainListDocument } from "dicty-graphql-schema";
 import useIntersectionObserver from "./hooks/intersectionobserver"
 import CatalogListWrapper from "./components/CatalogListWrapper"
-import CatalogList from "./CatalogList"
-import { useRef } from "react";
+import CatalogTableDisplay from "./components/CatalogTableDisplay"
+import { useRef } from "react"
 import { useQuery } from "@apollo/client"
 
 const CatalogContainer = () => {
   const rootRef = useRef<HTMLDivElement>(null)
-  const targetRef = useRef<HTMLLIElement>(null)
+  const targetRef = useRef<HTMLTableRowElement>(null)
   const { loading, error, data, fetchMore } = useQuery(
     StrainListDocument, {
     variables: { cursor: 0, limit: 10, filter: "" }
@@ -39,7 +39,7 @@ const CatalogContainer = () => {
         <CatalogListWrapper root={rootRef}>
           {loading && <LoadingDisplay />}
           {error && <ErrorDisplay error={error} />}
-          {data && <CatalogList data={data} target={targetRef} />}
+          {data && <CatalogTableDisplay data={data} target={targetRef} />}
         </CatalogListWrapper>
       </Box>
     </>
