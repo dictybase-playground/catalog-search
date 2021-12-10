@@ -1,39 +1,48 @@
-import React from "react"
-import { useQuery } from "@apollo/client"
-import Box from "@material-ui/core/Box"
 // import SearchBox from "./SearchBox"
 // import FilterDropdown from "./FilterDropdown"
-import CatalogList from "./CatalogList"
-import useLoadMoreItems from "./hooks/useLoadMoreItems"
+import Box from "@material-ui/core/Box"
+import LoadingDisplay from "./components/LoadingDisplay"
+import ErrorDisplay from "./components/ErrorDisplay"
 import { StrainListDocument } from "dicty-graphql-schema";
+import useIntersectionObserver from "./hooks/intersectionobserver"
+import CatalogListWrapper from "./components/CatalogListWrapper"
+import CatalogList from "./CatalogList"
+import { useRef } from "react";
+import { useQuery } from "@apollo/client"
 
 const CatalogContainer = () => {
+  const rootRef = useRef<HTMLDivElement>(null)
+  const targetRef = useRef<HTMLLIElement>(null)
   const { loading, error, data, fetchMore } = useQuery(
     StrainListDocument, {
     variables: { cursor: 0, limit: 10, filter: "" }
   })
-  const { loadMoreItems, hasMore } = useLoadMoreItems()
-
-  if (loading) return <div>loading...</div>
-
-  if (error) return <div>got error :(</div>
+  const onIntersection = ([entry]: IntersectionObserverEntry[]) => {
+    const { nextCursor } = data.listStrains
+    if (!entry.isIntersecting) return
+    if (!nextCursor) return
+    fetchMore({ variables: { cursor: nextCursor } })
+  }
+  useIntersectionObserver({
+    target: targetRef,
+    option: { root: rootRef.current, threshold: 0.25 },
+    onIntersection: onIntersection
+  })
 
   return (
-    <React.Fragment>
+    <>
       {/* <Box m={2} display="flex" flexDirection="row">
         <FilterDropdown />
         <SearchBox />
       </Box> */}
       <Box>
-        <CatalogList
-          data={data.listStrains.strains}
-          loadMore={() =>
-            loadMoreItems(data.listStrains, fetchMore, StrainListDocument)
-          }
-          hasMore={hasMore}
-        />
+        <LoadingDisplay loading={loading} />
+        <CatalogListWrapper root={rootRef}>
+          <CatalogList data={data} target={targetRef} />
+        </CatalogListWrapper>
+        <ErrorDisplay error={error} />
       </Box>
-    </React.Fragment>
+    </>
   )
 }
 
