@@ -36,11 +36,11 @@ const CatalogContainer = () => {
         <SearchBox />
       </Box> */}
       <Box>
-        <LoadingDisplay loading={loading} />
         <CatalogListWrapper root={rootRef}>
-          <CatalogList data={data} target={targetRef} />
+          {loading && <LoadingDisplay />}
+          {error && <ErrorDisplay error={error} />}
+          {data && <CatalogList data={data} target={targetRef} />}
         </CatalogListWrapper>
-        <ErrorDisplay error={error} />
       </Box>
     </>
   )
