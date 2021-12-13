@@ -38,4 +38,9 @@ export declare namespace AppProps {
     option?: IntersectionObserverInit,
     onIntersection: IntersectionObserverCallback
   }
+
+  export interface SizeProps {
+    width?: number
+    height?: number
+  }
 }
