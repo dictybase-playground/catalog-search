@@ -8,6 +8,11 @@ import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import Paper from '@material-ui/core/Paper'
 
+const truncate = (input: string, length: number): string => {
+  if (input.length <= length) return input
+  return input.slice(0, length)
+}
+
 const rowFn = ({ strains, nextCursor, targetRef, lastIndex }: AppProps.CatalogRowFnProps<HTMLTableRowElement>) => {
   const rows = strains.map((item: any, idx: number) => {
     let props: AppProps.CatalogTableRowProps<HTMLTableRowElement> = { key: item.id }
@@ -16,12 +21,28 @@ const rowFn = ({ strains, nextCursor, targetRef, lastIndex }: AppProps.CatalogRo
     }
     return (
       <TableRow {...props}>
-        <TableCell>{item.id}</TableCell>
         <TableCell>{item.label}</TableCell>
+        <TableCell>{truncate(item.summary, 84).concat("...")}</TableCell>
+        <TableCell>{item.id}</TableCell>
       </TableRow>
     )
   })
   return rows
+}
+
+const tblHeaders = [
+  "Strain Descriptor",
+  "Strain Summary",
+  "Strain ID"
+]
+
+const headerFn = ({ headers = tblHeaders }) => {
+  return (
+    <TableRow>{
+      headers.map((h: string, i: number) => <TableCell key={i}>{h}</TableCell>)
+    }
+    </TableRow>
+  )
 }
 
 export default function CatalogTableDisplay({ data, target: targetRef }: AppProps.CatalogListProps<HTMLTableRowElement>): JSX.Element {
@@ -31,10 +52,7 @@ export default function CatalogTableDisplay({ data, target: targetRef }: AppProp
     <TableContainer component={Paper}>
       <Table>
         <TableHead>
-          <TableRow>
-            <TableCell>Id</TableCell>
-            <TableCell>Label</TableCell>
-          </TableRow>
+          {headerFn({})}
         </TableHead>
         <TableBody>
           {rowFn({ strains, nextCursor, targetRef, lastIndex })}
