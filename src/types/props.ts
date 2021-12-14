@@ -1,4 +1,5 @@
 import { RefObject } from "react"
+import { ClassNameMap } from "@material-ui/styles/withStyles"
 
 export declare namespace AppProps {
   export interface CatalogListWrapperProps {
@@ -14,6 +15,11 @@ export declare namespace AppProps {
   export interface CatalogTableRowProps<Type> {
     key: string
     ref?: RefObject<Type>
+  }
+
+  export interface CatalogTableHeaderProps {
+    headers?: string[]
+    classes: ClassNameMap<"head">
   }
 
   export interface CatalogRowFnProps<Type> {
