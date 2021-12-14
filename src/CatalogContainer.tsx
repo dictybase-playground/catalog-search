@@ -15,7 +15,7 @@ const CatalogContainer = () => {
   const targetRef = useRef<HTMLTableRowElement>(null)
   const { loading, error, data, fetchMore } = useQuery(
     StrainListDocument, {
-    variables: { cursor: 0, limit: 10, filter: "" }
+    variables: { cursor: 0, limit: 12, filter: "" }
   })
   const onIntersection = ([entry]: IntersectionObserverEntry[]) => {
     const { nextCursor } = data.listStrains
@@ -25,7 +25,7 @@ const CatalogContainer = () => {
   }
   useIntersectionObserver({
     target: targetRef,
-    option: { root: rootRef.current, threshold: 0.25 },
+    option: { root: rootRef.current, threshold: 0.10 },
     onIntersection: onIntersection
   })
 

@@ -16,7 +16,7 @@ const useStyles = makeStyles<DefaultTheme, AppProps.SizeProps>({
 export default function CatalogListWrapper({ root: rootRef, children }: AppProps.CatalogListWrapperProps): JSX.Element {
   const {height} = useWindowSize()
   // 50% of actual client window height
-  const classes = useStyles({ height: height && 50*height/100 })
+  const classes = useStyles({ height: height && 60*height/100 })
   return (
     <Paper ref={rootRef} className={classes.root}>
       <List>
