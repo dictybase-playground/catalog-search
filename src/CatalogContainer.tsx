@@ -1,7 +1,7 @@
 // import SearchBox from "./SearchBox"
 // import FilterDropdown from "./FilterDropdown"
 import Box from "@material-ui/core/Box"
-import LoadingDisplay from "./components/LoadingDisplay"
+import LoadingDisplay from "./components/LoadingDisplay.bs"
 import ErrorDisplay from "./components/ErrorDisplay"
 import { StrainListDocument } from "dicty-graphql-schema";
 import useIntersectionObserver from "./hooks/intersectionobserver"
