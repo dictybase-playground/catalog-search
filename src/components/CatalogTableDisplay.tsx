@@ -64,7 +64,7 @@ const rowFn = ({ strains, nextCursor, targetRef, lastIndex }: AppProps.CatalogRo
       return (
         <>
           <TableRow key={key}>{cellFn(item)}</TableRow>
-          <TableRow key={key} ref={targetRef}>
+          <TableRow key={idx} ref={targetRef}>
             <TableCell colSpan={3}>
               <LinearProgress />
             </TableCell>
