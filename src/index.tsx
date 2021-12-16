@@ -4,6 +4,11 @@ import CssBaseline from "@material-ui/core/CssBaseline"
 import App from "./App"
 import reportWebVitals from "./reportWebVitals"
 import "fontsource-roboto"
+import {
+  BrowserRouter,
+  Routes,
+  Route
+} from "react-router-dom"
 
 // if (process.env.NODE_ENV === "development") {
 //   const { worker } = require("./mocks/browser")
@@ -13,7 +18,11 @@ import "fontsource-roboto"
 ReactDOM.render(
   <React.StrictMode>
     <CssBaseline />
-    <App />
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<App />} />
+      </Routes>
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root"),
 )

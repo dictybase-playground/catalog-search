@@ -1,6 +1,4 @@
-import React from "react"
 import { ApolloProvider } from "@apollo/client"
-import { BrowserRouter } from "react-router-dom"
 import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles"
 import Container from "@material-ui/core/Container"
 import CatalogContainer from "./CatalogContainer"
@@ -15,13 +13,11 @@ const App = () => {
   return (
     <ApolloProvider client={apolloClient}>
       <MuiThemeProvider theme={theme}>
-        <BrowserRouter>
-          <Container>
-            <CatalogProvider>
-              <CatalogContainer />
-            </CatalogProvider>
-          </Container>
-        </BrowserRouter>
+        <Container>
+          <CatalogProvider>
+            <CatalogContainer />
+          </CatalogProvider>
+        </Container>
       </MuiThemeProvider>
     </ApolloProvider>
   )
