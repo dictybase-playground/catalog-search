@@ -1,31 +1,30 @@
 import {
-  useStrainListQuery,
-  useListStrainsInventoryQuery,
-  useListBacterialStrainsQuery
+  StrainListDocument,
+  ListStrainsInventoryDocument,
+  ListBacterialStrainsDocument
 } from "dicty-graphql-schema"
+import { AppStrainTypes } from "./types/strain";
 
-export const StrainConfig = [{
+export const StrainConfig: Array<AppStrainTypes.SearchConfigMember> = [{
   label: "Regular Strains",
   filterParam: "regular",
-  queryFn: useStrainListQuery,
+  graphqlQuery: StrainListDocument,
   queryFilter: "name!~GWDI;label!=AX4",
   displayChip: { label: "Stock Type", value: "Regular" }
 }, {
   label: "GWDI Strains",
   filterParam: "gwdi",
-  queryFn: useStrainListQuery,
+  graphqlQuery: StrainListDocument,
   queryFilter: "name=~GWDI",
   displayChip: { label: "Stock Type", value: "GWDI" }
 }, {
   label: "All Available Strains",
   filterParam: "all",
-  queryFn: useListStrainsInventoryQuery,
-  queryFilter: "",
+  graphqlQuery: ListStrainsInventoryDocument,
   displayChip: { label: "Stock Type", value: "All Available" }
 }, {
   label: "Bacterial Strains",
   filterParam: "bacterial",
-  queryFn: useListBacterialStrainsQuery,
-  queryFilter: "",
+  graphqlQuery: ListBacterialStrainsDocument,
   displayChip: { label: "Stock Type", value: "Bacterial" }
 }]

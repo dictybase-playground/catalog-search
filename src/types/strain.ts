@@ -1,3 +1,5 @@
+import { TypedDocumentNode } from "@apollo/client";
+
 export declare namespace AppStrainTypes {
   export interface Strain {
     id: string
@@ -14,6 +16,19 @@ export declare namespace AppStrainTypes {
 
   export interface StrainLists {
     listStrains: ListStrainsData
+  }
+
+  export interface ChipDisplay {
+    label: string
+    value: string
+}
+
+  export interface SearchConfigMember {
+    label: string
+    filterParam: string
+    queryFilter?: string
+    displayChip: ChipDisplay
+    graphqlQuery: TypedDocumentNode
   }
 }
 
