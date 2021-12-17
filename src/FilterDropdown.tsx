@@ -1,45 +1,9 @@
-import React from "react"
+import { useState } from "react"
 import { makeStyles, Theme } from "@material-ui/core/styles"
 import FormControl from "@material-ui/core/FormControl"
 import Select from "@material-ui/core/Select"
 import Input from "@material-ui/core/Input"
-import { useCatalogStore } from "./CatalogContext"
-import { AppContextTypes } from "./types/context"
-
-type Filters = {
-  [key: string]: {
-    tags: string[]
-    queryFilter:AppContextTypes.QueryVariablesWithFilter["filter"]
-  }
-}
-
-const presetFilters = {
-  "Regular Strains": {
-    tags: ["Stock Type: Regular"],
-    queryFilter: {
-      strain_type: "REGULAR",
-    },
-  },
-  "GWDI Strains": {
-    tags: ["Stock Type: GWDI"],
-    queryFilter: {
-      strain_type: "GWDI",
-    },
-  },
-  "Available Regular Strains": {
-    tags: ["Stock Type: Regular", "Currently Available"],
-    queryFilter: {
-      strain_type: "REGULAR",
-      in_stock: true,
-    },
-  },
-  "Bacterial Strains": {
-    tags: ["Stock Type: Bacterial"],
-    queryFilter: {
-      strain_type: "BACTERIAL",
-    },
-  },
-} as Filters
+import { AppProps } from "./types/props";
 
 const useStyles = makeStyles((theme: Theme) => ({
   filter: {
@@ -62,26 +26,14 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }))
 
-const FilterDropdown = () => {
+export default function FilterDropdown({ paramFn, items }: AppProps.FilterDropdownProps) {
   const classes = useStyles()
-  const {
-    state: { presetFilter },
-    setPresetFilter,
-    setActiveFilters,
-    setQueryVariables,
-  } = useCatalogStore()
+  const [value, setValue] = useState<string>("Filters")
 
-  const handleChange = (
-    event: React.ChangeEvent<{ name?: string; value: any }>,
-  ) => {
+  const handleChange = (event: React.ChangeEvent<{ name?: string; value: any }>) => {
     const val = event.target.value
-    setPresetFilter(val)
-    setActiveFilters(presetFilters[val].tags)
-    setQueryVariables({
-      cursor: 0,
-      limit: 10,
-      filter: presetFilters[val].queryFilter,
-    })
+    setValue(val)
+    paramFn({ group: val })
   }
 
   return (
@@ -90,7 +42,7 @@ const FilterDropdown = () => {
         <Select
           native
           onChange={handleChange}
-          value={presetFilter}
+          value={value}
           input={
             <Input
               disableUnderline
@@ -104,15 +56,9 @@ const FilterDropdown = () => {
           <option value="Filters" disabled>
             Filters
           </option>
-          {Object.keys(presetFilters).map((item, index) => (
-            <option value={item} key={index}>
-              {item}
-            </option>
-          ))}
+          {items.map((k, i) => (<option value={k} key={i}> {k} </option>))}
         </Select>
       </FormControl>
     </span>
   )
 }
-
-export default FilterDropdown
