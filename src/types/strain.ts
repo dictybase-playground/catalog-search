@@ -27,6 +27,7 @@ export declare namespace AppStrainTypes {
     label: string
     filterParam: string
     queryFilter?: string
+    dataField: string
     displayChip: ChipDisplay
     graphqlQuery: TypedDocumentNode
   }
