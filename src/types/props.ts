@@ -10,6 +10,7 @@ export declare namespace AppProps {
 
   export interface CatalogListProps<Type> {
     data: any,
+    dataField: string
     target: RefObject<Type>
   }
 

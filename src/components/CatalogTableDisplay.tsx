@@ -77,9 +77,9 @@ const rowFn = ({ strains, nextCursor, targetRef, lastIndex }: AppProps.CatalogRo
   return rows
 }
 
-export default function CatalogTableDisplay({ data, target: targetRef }: AppProps.CatalogListProps<HTMLTableRowElement>): JSX.Element {
+export default function CatalogTableDisplay({ data, dataField, target: targetRef }: AppProps.CatalogListProps<HTMLTableRowElement>): JSX.Element {
   const classes = useStyles()
-  const { strains, nextCursor } = data.listStrains
+  const { strains, nextCursor } = data[dataField]
   const lastIndex = strains.length - 1
   return (
     <TableContainer className={classes.root}>
