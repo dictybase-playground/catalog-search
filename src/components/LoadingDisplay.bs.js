@@ -18,13 +18,9 @@ function LoadingDisplay(Props) {
             });
 }
 
-var $$default = "LoadingDisplay";
-
 var make = LoadingDisplay;
 
 export {
-  $$default ,
-  $$default as default,
   make ,
   
 }

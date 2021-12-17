@@ -1,4 +1,3 @@
-let default = "LoadingDisplay"
 @react.component
 let make = () => {
   open Mui
