@@ -1,5 +1,6 @@
 import { RefObject } from "react"
 import { ClassNameMap } from "@material-ui/styles/withStyles"
+import { AppStrainTypes } from "./strain";
 
 export declare namespace AppProps {
   export interface CatalogListWrapperProps {
@@ -48,5 +49,17 @@ export declare namespace AppProps {
   export interface SizeProps {
     width?: number
     height?: number
+  }
+
+  interface GraphqlQueryVarProps {
+    cursor: number
+    limit: number
+  }
+
+  export interface StrainCatalogSearchProps {
+    searchParams: URLSearchParams,
+    strainConfig: AppStrainTypes.SearchConfigMember[]
+    field?: string
+    value?:string
   }
 }
