@@ -63,4 +63,9 @@ export declare namespace AppProps {
     field?: string
     value?:string
   }
+
+  export interface FilterDropdownProps {
+    paramFn: Function
+    items: string[]
+  }
 }
