@@ -1,10 +1,5 @@
-import { ApolloError } from "@apollo/client"
+import { AppProps } from "../types/props"
 
-interface ErrorDisplayProps {
-  error: ApolloError | undefined
-}
-
-
-export default function ErrorDisplay({ error }: ErrorDisplayProps): JSX.Element {
-    return <h2>Error..... {error?.message}</h2>
+export default function ErrorDisplay({ error }: AppProps.ErrorDisplayProps): JSX.Element {
+  return <h2>Error..... {error?.message}</h2>
 }

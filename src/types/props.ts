@@ -1,6 +1,7 @@
 import { RefObject } from "react"
 import { ClassNameMap } from "@material-ui/styles/withStyles"
 import { AppStrainTypes } from "./strain";
+import { ApolloError } from "@apollo/client"
 
 export declare namespace AppProps {
   export interface CatalogListWrapperProps {
@@ -61,11 +62,16 @@ export declare namespace AppProps {
     searchParams: URLSearchParams,
     strainConfig: AppStrainTypes.SearchConfigMember[]
     field?: string
-    value?:string
+    value?: string
   }
 
   export interface FilterDropdownProps {
     paramFn: Function
     items: string[]
   }
+
+  export interface ErrorDisplayProps {
+    error: ApolloError | undefined
+  }
+
 }
