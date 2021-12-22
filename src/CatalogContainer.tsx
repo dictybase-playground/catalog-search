@@ -6,9 +6,10 @@ import { useSearchParams } from "react-router-dom"
 import { useQuery } from "@apollo/client"
 
 import { make as LoadingDisplay } from "./components/LoadingDisplay.bs"
+import { make as CatalogTableDisplay } from "./components/CatalogTableDisplay.bs"
+// import CatalogTableDisplay from "./components/CatalogTableDisplay"
 import ErrorDisplay from "./components/ErrorDisplay"
 import CatalogListWrapper from "./components/CatalogListWrapper"
-import CatalogTableDisplay from "./components/CatalogTableDisplay"
 import useIntersectionObserver from "./hooks/intersectionobserver"
 import useStrainCatalogSearch from "./hooks/useStrainCatalogSearch"
 import { graphqlQueryVars, strainConfig } from "./config"
@@ -23,8 +24,8 @@ export default function CatalogContainer() {
     value: "regular"
   })
 
-  const gqvars = { variables: { filter: filter, ...graphqlQueryVars } }
-  const { loading, error, data, fetchMore } = useQuery(query, gqvars)
+  const queryVars = { variables: { filter: filter, ...graphqlQueryVars } }
+  const { loading, error, data, fetchMore } = useQuery(query, queryVars)
 
   const rootRef = useRef<HTMLDivElement>(null)
   const targetRef = useRef<HTMLTableRowElement>(null)
