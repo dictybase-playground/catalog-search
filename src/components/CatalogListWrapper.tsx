@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles"
 import { DefaultTheme } from "@material-ui/styles";
 import Paper from "@material-ui/core/Paper"
 // import useWindowSize from "../hooks/useWindowSize"
-import { useWindowSize } from "../hooks/useWindowSize.bs"
+import { useWindowSize } from "../hooks/CatalogSearchHook.bs"
 
 
 const useStyles = makeStyles<DefaultTheme, AppProps.SizeProps>({
