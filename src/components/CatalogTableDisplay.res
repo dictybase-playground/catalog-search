@@ -99,7 +99,7 @@ module CatalogTableHeader = {
       ~fontSize={Subtitle1.fontSize},
       ~fontWeight={fontWeightBold},
       ~letterSpacing={Subtitle1.letterSpacing},
-      (),
+     (),
     ),
   })
   @react.component
