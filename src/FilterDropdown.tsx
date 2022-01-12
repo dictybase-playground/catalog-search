@@ -26,14 +26,16 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }))
 
-export default function FilterDropdown({ paramFn, items }: AppProps.FilterDropdownProps) {
+export default function FilterDropdown({ paramFn, items, defaultFilterParam }: AppProps.FilterDropdownProps) {
   const classes = useStyles()
-  const [value, setValue] = useState<string>("Filters")
+  const defaultObj = items.find(it => it.filterParam === defaultFilterParam) as AppProps.ItemProps
+  const [value, setValue] = useState<string>(defaultObj.label)
 
   const handleChange = (event: React.ChangeEvent<{ name?: string; value: any }>) => {
-    const val = event.target.value
-    setValue(val)
-    paramFn({ group: val })
+    const filter = event.target.value
+    const obj = items.find(it => it.filterParam === filter) as AppProps.ItemProps
+    setValue(obj.label)
+    paramFn({ group: filter })
   }
 
   return (
@@ -53,10 +55,15 @@ export default function FilterDropdown({ paramFn, items }: AppProps.FilterDropdo
               }}
             />
           }>
-          <option value="Filters" disabled>
-            Filters
+          <option value={defaultObj.filterParam} disabled>
+            {defaultObj.label}
           </option>
-          {items.map((k, i) => (<option value={k} key={i}> {k} </option>))}
+          {
+            items.filter(obj => obj.filterParam !== defaultObj.filterParam)
+              .map((obj, i: number) => (
+                (<option value={obj.filterParam} key={i}> {obj.label} </option>)
+              ))
+          }
         </Select>
       </FormControl>
     </span>

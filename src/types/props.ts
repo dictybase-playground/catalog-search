@@ -65,9 +65,15 @@ export declare namespace AppProps {
     value?: string
   }
 
+  export interface ItemProps {
+    label: string
+    filterParam: string
+  }
+
   export interface FilterDropdownProps {
+    defaultFilterParam: string
     paramFn: Function
-    items: string[]
+    items: Array<ItemProps>
   }
 
   export interface ErrorDisplayProps {
