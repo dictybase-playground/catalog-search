@@ -1,8 +1,7 @@
 import { useState } from "react"
 import { makeStyles, Theme } from "@material-ui/core/styles"
 import FormControl from "@material-ui/core/FormControl"
-import Select from "@material-ui/core/Select"
-import Input from "@material-ui/core/Input"
+import NativeSelect from "@material-ui/core/NativeSelect"
 import { AppProps } from "./types/props";
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -19,53 +18,29 @@ const useStyles = makeStyles((theme: Theme) => ({
     borderBottomLeftRadius: "4px",
     fontSize: "0.9rem",
   },
-  select: {
-    "&:focus": {
-      backgroundColor: "#fafafa",
-    },
-  },
 }))
 
 export default function FilterDropdown({ paramFn, items, defaultFilterParam }: AppProps.FilterDropdownProps) {
   const classes = useStyles()
-  const defaultObj = items.find(it => it.filterParam === defaultFilterParam) as AppProps.ItemProps
-  const [value, setValue] = useState<string>(defaultObj.label)
+  const [filterValue, setFilterValue] = useState<string>(defaultFilterParam)
 
-  const handleChange = (event: React.ChangeEvent<{ name?: string; value: any }>) => {
-    const filter = event.target.value
-    const obj = items.find(it => it.filterParam === filter) as AppProps.ItemProps
-    setValue(obj.label)
+  const handleChange = (event: React.ChangeEvent<{ name?: string; value: unknown }>) => {
+    const filter = event.target.value as string
+    setFilterValue(filter)
     paramFn({ group: filter })
   }
 
   return (
-    <span className={classes.filter}>
-      <FormControl>
-        <Select
-          native
-          onChange={handleChange}
-          value={value}
-          input={
-            <Input
-              disableUnderline
-              name="catalog-filter"
-              data-testid="catalog-filter"
-              classes={{
-                input: classes.select,
-              }}
-            />
-          }>
-          <option value={defaultObj.filterParam} disabled>
-            {defaultObj.label}
-          </option>
-          {
-            items.filter(obj => obj.filterParam !== defaultObj.filterParam)
-              .map((obj, i: number) => (
-                (<option value={obj.filterParam} key={i}> {obj.label} </option>)
-              ))
-          }
-        </Select>
+    <div>
+      <FormControl variant="outlined" className={classes.filter}>
+        <NativeSelect onChange={handleChange} value={filterValue}>
+          {items.map((obj, i) => (
+            <option value={obj.filterParam} key={i}>
+              {obj.label}
+            </option>
+          ))}
+        </NativeSelect>
       </FormControl>
-    </span>
+    </div>
   )
 }
